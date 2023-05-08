@@ -62,7 +62,7 @@ public class Runner implements InputListener
         {
             try { Thread.sleep(1000/30); } catch(Exception e) {}
             map.print();
-            renderer.render(player, map.getMap());
+            renderer.render2(player, map.getMap());
         }
     }
 

@@ -22,9 +22,9 @@ public class Renderer
 
     public Renderer(InputActivator input)
     {
-        slices = 320/16;
-        scale = 16;
-        viewDist = 200/16;
+        slices = 320;
+        scale = 1;
+        viewDist = 200;
         view = new String[viewDist * 1][slices * 1];
         //input = i;
         for(int y = 0; y < view.length; y++)
@@ -68,7 +68,7 @@ public class Renderer
         frame.pack();
         frame.setVisible(true);
     }
-    
+
     // Sets the title of the window.
     public void setTitle(String title)
     {
@@ -141,6 +141,79 @@ public class Renderer
         frame.repaint();
     }
 
+    public void render2(Player player, String[][] map)
+    {
+        Graphics2D graphics = image.createGraphics();
+        graphics.setColor(BACKGROUND);
+        graphics.fillRect(0, 0, image.getWidth(), image.getHeight());
+        graphics.dispose();
+        Vector2D[] rayPosition = new Vector2D[slices];
+        for(int i = 0; i < slices; i++)
+        {
+            rayPosition[i] = new Vector2D(player.x(), player.y());
+            //calculate the angle of this slice
+            double angle = player.r() - 90 / 2 + ((double)90 / slices) * i;
+            //calculate direction
+            Vector2D direction = new Vector2D(Math.cos(angle * 0.0174533) / 100, Math.cos(angle * 0.0174533) / 100);
+            //increment ad infinitum
+            for(int j = 0; j < 9999; j ++)
+            {
+                rayPosition[i].add(direction);
+                if((int)rayPosition[i].y() < 0 || (int)rayPosition[i].x() < 0 || (int)rayPosition[i].y() > map.length - 1 || 
+                (int)rayPosition[i].x() > map[0].length - 1)
+                {
+                    rayPosition[i] = new Vector2D(9999, 9999);
+                }
+                else if (map[(int)(rayPosition[i].y())][(int)rayPosition[i].x()].equals("000") || 
+                map[(int)(rayPosition[i].y())][(int)rayPosition[i].x()].equals(" 0 "))
+                {
+                    break;
+                }
+            }
+            //find distance
+            double xValue = rayPosition[i].x() - player.x();
+            double yValue = rayPosition[i].y() - player.y();
+            double distance = Math.sqrt(Math.abs((xValue)*(xValue) + (yValue)*(yValue)));
+            //calculate the length of this particular slice
+            int sliceLength = 0;
+            if(viewDist > (int)distance){sliceLength = viewDist - (int)distance * (int)((double)viewDist/64);}
+
+            //fill slice with blank space so I dont get permanenet screen tarring
+            for(int y = 0; y < view.length; y++)
+            {
+                view[y][i] = " . ";
+                //translate to graphics
+                if(y < view.length/2)
+                {
+                    graphics = image.createGraphics();
+                    graphics.setColor(BACKGROUND);
+                    graphics.fillRect(i*scale, y*scale, 1*scale, 1*scale);
+                    graphics.dispose();
+                }
+                else
+                {
+                    graphics = image.createGraphics();
+                    graphics.setColor(new Color(128,128,128));
+                    graphics.fillRect(i*scale, y*scale, 1*scale, 1*scale);
+                    graphics.dispose();
+                }
+            }
+            //fill a slice to said length with at desired length
+            for(int y = view.length/2 - sliceLength/2; y <  view.length/2 + sliceLength/2; y++)
+            {
+                view[y][i] = "000";
+                //translate to graphics
+                graphics = image.createGraphics();
+                graphics.setColor(new Color(0,0,255));
+                graphics.fillRect(i*scale, y*scale, 1*scale, 1*scale);
+                graphics.dispose();
+            }
+        }
+        //print();
+        //transate to graphics
+        frame.repaint();
+    }
+
     public int rayCast(double slope, Player player, String[][] map)
     {
         int shortestIndex = viewDist;
@@ -157,7 +230,7 @@ public class Renderer
             double lossYOffset = (double) i2 * slope;
             double lossyY = (double) player.y() + lossYOffset;
             int yValue = (int)(lossyY);
-            int xValue = (int)player.x() + (int)i2;
+            int xValue = (int)(player.x() + i2);
             //check that you are in the bounds of the map
             if(yValue < 0 || xValue < 0 || yValue > map.length - 1 || xValue > map[yValue].length - 1)
             {
