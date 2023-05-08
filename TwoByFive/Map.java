@@ -10,6 +10,7 @@ public class Map
     private int size;
     private String[][] map;
     Player player;
+    //mapp
     public Map()
     {
         //make empty map
