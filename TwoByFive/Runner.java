@@ -37,7 +37,7 @@ public class Runner implements InputListener
         //System.out.println(name);
 
         boolean dead = false;
-
+        //balls
         //Renderer renderer = new Renderer();
         //renderer.render(player, map.getMap());
 
