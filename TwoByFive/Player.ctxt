@@ -1,0 +1,26 @@
+#BlueJ class context
+comment0.target=Player
+comment0.text=\r\n\ Write\ a\ description\ of\ class\ Player\ here.\r\n\r\n\ @author\ (your\ name)\r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
+comment1.params=
+comment1.target=Player()
+comment10.params=r
+comment10.target=void\ r(double)
+comment11.params=rotation\ map
+comment11.target=void\ transR(double,\ java.lang.String[][])
+comment2.params=x\ y\ r
+comment2.target=Player(double,\ double,\ double)
+comment3.params=
+comment3.target=double\ x()
+comment4.params=x
+comment4.target=void\ x(double)
+comment5.params=dist\ map
+comment5.target=void\ moveX(int,\ java.lang.String[][])
+comment6.params=
+comment6.target=double\ y()
+comment7.params=y
+comment7.target=void\ y(int)
+comment8.params=dist\ map
+comment8.target=void\ moveY(double,\ java.lang.String[][])
+comment9.params=
+comment9.target=double\ r()
+numComments=12
