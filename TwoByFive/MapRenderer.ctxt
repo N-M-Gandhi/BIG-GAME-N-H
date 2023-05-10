@@ -12,6 +12,4 @@ comment4.params=title
 comment4.target=void\ setTitle(java.lang.String)
 comment5.params=
 comment5.target=void\ render()
-comment6.params=
-comment6.target=void\ raycasts()
-numComments=7
+numComments=6

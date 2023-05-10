@@ -36,7 +36,7 @@ public class Runner implements InputListener
         mapRenderer = new MapRenderer(32, input, map, player);
         mapRenderer.setTitle("TwoByFive Map Renderer");
         map.print();
-        renderer.render3(player, map.getMap());
+        renderer.render(player, map.getMap());
     }
 
     public static void main(String[] args)
@@ -75,7 +75,7 @@ public class Runner implements InputListener
             try { Thread.sleep(1000/30); } catch(Exception e) {}
             map.print();
             mapRenderer.render();
-            renderer.render3(player, map.getMap());
+            renderer.render(player, map.getMap());
         }
     }
 
