@@ -1,4 +1,3 @@
-
 /**
  * Write a description of class Map here.
  *
@@ -10,8 +9,8 @@ public class Map
     private int size;
     private String[][] map;
     Player player;
-    //mapp
-    public Map()
+    
+    public Map(InputActivator input)
     {
         //make empty map
         size = 25;

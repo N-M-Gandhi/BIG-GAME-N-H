@@ -9,12 +9,13 @@ public class Runner implements InputListener
 {
     private Player player;
     private Map map;
+    private MapRenderer mapRenderer;
     private Renderer renderer;
     private InputActivator input;
     public Runner()
     {
         player = new Player(12, 20, 90);
-        map = new Map(26, player);
+        map = new Map(32, player);
         input = new InputActivator();
         input.setInputListener(this);
         renderer = new Renderer(input);
@@ -23,8 +24,12 @@ public class Runner implements InputListener
         Wall wall1 = new Wall(10, true, 3, 6, map.getMap());
         Wall wall2 = new Wall(20, true, 12, 10, map.getMap());
         Wall wall3 = new Wall(10, false, 4, 17, map.getMap());
+        Wall wall4 = new Wall(10, true, 3, 5, map.getMap());
+        Wall wall5 = new Wall(10, true, 3, 4, map.getMap());
+        mapRenderer = new MapRenderer(32, input, map, player);
+        mapRenderer.setTitle("TwoByFive Map Renderer");
         map.print();
-        renderer.render(player, map.getMap());
+        renderer.render3(player, map.getMap());
     }
 
     public static void main(String[] args)
@@ -37,7 +42,7 @@ public class Runner implements InputListener
         //System.out.println(name);
 
         boolean dead = false;
-        //balls
+
         //Renderer renderer = new Renderer();
         //renderer.render(player, map.getMap());
 
@@ -62,7 +67,8 @@ public class Runner implements InputListener
         {
             try { Thread.sleep(1000/30); } catch(Exception e) {}
             map.print();
-            renderer.render2(player, map.getMap());
+            mapRenderer.render();
+            renderer.render3(player, map.getMap());
         }
     }
 
@@ -111,45 +117,52 @@ public class Runner implements InputListener
 
     public void wPressed()
     {
-        double distX = (Math.cos(Math.toRadians(player.r()))) * 2;
-        double distY = (Math.sin(Math.toRadians(player.r()))) * 2;
+        // double distX = (Math.cos(Math.toRadians(player.r()))) * 2;
+        // double distY = (Math.sin(Math.toRadians(player.r()))) * 2;
 
-        player.moveX((int)(distX) * -1, map.getMap());
-        player.moveY((int)(distY) * -1, map.getMap());
+        // player.moveX((int)(distX) * -1, map.getMap());
+        // player.moveY((int)(distY) * -1, map.getMap());
 
-        System.out.println((int)(distX) * -1);
-        System.out.println((int)(distY) * -1);
+        // System.out.println((int)(distX) * -1);
+        // System.out.println((int)(distY) * -1);
+        
+        player.moveY(-0.25, map.getMap());
     }
 
     public void sPressed()
     {
-        double distX = (Math.cos(Math.toRadians(player.r()))) * 1;
-        double distY = (Math.sin(Math.toRadians(player.r()))) * 1;
+        // double distX = (Math.cos(Math.toRadians(player.r()))) * 1;
+        // double distY = (Math.sin(Math.toRadians(player.r()))) * 1;
 
-        player.moveX((int)(distX) * 1, map.getMap());
-        player.moveY((int)(distY) * 1, map.getMap());
+        // player.moveX((int)(distX) * 1, map.getMap());
+        // player.moveY((int)(distY) * 1, map.getMap());
 
-        System.out.println((int)(distX) * 1);
-        System.out.println((int)(distY) * 1);
+        // System.out.println((int)(distX) * 1);
+        // System.out.println((int)(distY) * 1);
+        
+        player.moveY(0.25, map.getMap());
     }
 
     public void aPressed()
     {
-        player.transR(6, map.getMap());
+        // player.transR(6, map.getMap());
+        
+        player.moveX(-0.25, map.getMap());
     }
 
     public void dPressed()
     {
-        player.transR(-6, map.getMap());
+        // player.transR(-6, map.getMap());
+        
+        player.moveX(0.25, map.getMap());
     }
 
     public void qPressed()
     {
-
+        player.transR(6, map.getMap());
     }
 
     public void ePressed()
-    {
-
+    {player.transR(-6, map.getMap());
     }
 }

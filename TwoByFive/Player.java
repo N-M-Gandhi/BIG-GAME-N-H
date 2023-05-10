@@ -35,18 +35,18 @@ public class Player
         //sets x position
         xPos = x;
     }
-    public void moveX(int dist, String map[][])
+    public void moveX(double dist, String map[][])
     {
         map[(int)this.y()][(int)this.x()] = " . ";
         if(!(xPos + 1 > map.length - 1) && !(xPos + 1 < 0) && 
         !(map[(int)this.y()][(int)this.x() + 1].equals("000")) && !(map[(int)this.y()][(int)this.x() + 1].equals(" 0 ")))
         {
-            if(dist > 0){xPos = xPos + 1;}
+            if(dist > 0){xPos = xPos + dist;}
         }
         if(!(xPos - 1 > map.length - 1) && !(xPos - 1 < 0) && 
         !(map[(int)this.y()][(int)this.x() - 1].equals("000")) && !(map[(int)this.y()][(int)this.x() - 1].equals(" 0 ")))
         {
-            if(dist < 0){xPos = xPos + -1;}
+            if(dist < 0){xPos = xPos + dist;}
         }
         map[(int)this.y()][(int)this.x()] = " " + playerChar.substring(((int)rot/45), (((int)rot/45)+1)) + " ";
     }

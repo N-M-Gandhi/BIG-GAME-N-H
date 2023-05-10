@@ -9,10 +9,12 @@ public class Vector2D
 {
     private double x;
     private double y;
-
-    /**
-     * Constructor for objects of class Vector2D
-     */
+    
+    public Vector2D()
+    {
+        x = 0; //what are numerical values normally set as  by default?
+        y = 0; //cant set them as null!
+    }
     public Vector2D(double ex, double ey)
     {
         x = ex;
