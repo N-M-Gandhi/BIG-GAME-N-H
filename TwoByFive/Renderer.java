@@ -228,7 +228,7 @@ public class Renderer
             double rayAngle = player.r() + 45 - viewIncrement * i; //the angle of this speciic raycast
             double rayLength = rayCast2(rayAngle, player, map); //the length of a casted ray from player position at rayAngle
             int sliceLength = 0;
-            if(height > (int)rayLength * height / 16 && (int)rayLength * height / 16 > 0)
+            if(height > (int)rayLength * height / 32 && (int)rayLength * height / 32 > 0)
             {sliceLength = (int)(height - rayLength * height / 16);} // calculate length of slice
 
             //fill slice with blank space so I dont get permanenet screen tarring
@@ -295,7 +295,7 @@ public class Renderer
         }
         //if(rayAngle > 180 && rayAngle < 270){stepDirection = -1;}
         Vector2D[] intersections = new Vector2D[2]; //set up the store of vertical and horizontal collisions
-        intersections[0] = new Vector2D(); intersections[1] = new Vector2D(); //make sure thery filled by default
+        intersections[0] = new Vector2D(999, 999); intersections[1] = new Vector2D(999, 999); //make sure thery filled by default
 
         //Vertical line collision
         //find innitial vertical line intersection point

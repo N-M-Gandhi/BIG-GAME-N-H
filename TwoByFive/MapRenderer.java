@@ -102,75 +102,125 @@ public class MapRenderer
 
     // public void raycasts()
     // {
-    // Graphics2D graphics = image.createGraphics();
-    // graphics = image.createGraphics();
-    // graphics.setColor(new Color(0,255,0));
+        // Graphics2D graphics = image.createGraphics();
+        // graphics = image.createGraphics();
+        // graphics.setColor(new Color(0,255,0));
 
-    // int feildOfVeiw = 90;
-    // int slices = 90;
+        // int feildOfVeiw = 2;
+        // int slices = 2;
 
-    // double viewIncrement = (double)feildOfVeiw/(double)(slices-1);
-    // for(int i = 0; i < slices; i++)
-    // {
-    // double rayAngle = player.r() + 45 - viewIncrement * i; //the angle of this speciic raycast
-    // double slope = Math.tan(Math.toRadians(rayAngle));//calculate slope of rayCast
-    // int stepDirection = 1;
-    // if(rayAngle < 90){slope = slope * -1;}
-    // if(rayAngle > 180 && rayAngle < 270){slope = slope * -1;}
-    // Vector2D[] intersections = new Vector2D[2]; //set up the store of vertical and horizontal collisions
-    // intersections[0] = new Vector2D(); intersections[1] = new Vector2D(); //make sure thery filled by default
+        // double viewIncrement = (double)feildOfVeiw/(double)(slices-1);
+        // for(int i = 0; i < slices; i++)
+        // {
+            // double rayAngle = player.r() + 45 - viewIncrement * i; //the angle of this speciic raycast
+            // double slope = Math.tan(Math.toRadians(rayAngle));//calculate slope of rayCast
+            // int firstXMult = 1;
+            // int firstYMult = 1;
+            // int secondXMult = 1;
+            // int secondYMult = 1;
+            // int thirdXMult = 1;
+            // int thirdYMult = 1;
+            // if(rayAngle <= 90)//blasphemy
+            // {
+                // firstXMult = -1; secondXMult = 1; thirdXMult = 1;
+                // firstYMult = -1; secondYMult = -1; thirdYMult = -1;
+            // }
+            // else if(rayAngle > 90 && rayAngle <= 180)
+            // {
+                // firstXMult = 1; secondXMult = -1; thirdXMult = 1;
+                // firstYMult = -1; secondYMult = -1; thirdYMult = -1;
+            // }
+            // else if(rayAngle > 180 && rayAngle <= 270)
+            // {
+                // firstXMult = 1; secondXMult = -1; thirdXMult = 1;
+                // firstYMult = 1; secondYMult = -1; thirdYMult = 1;
+            // }
+            // else if(rayAngle > 270)
+            // {
+                // firstXMult = -1; secondXMult = 1; thirdXMult = 1;
+                // firstYMult = -1; secondYMult = 1; thirdYMult = 1;
+            // }
+            // Vector2D[] intersections = new Vector2D[2]; //set up the store of vertical and horizontal collisions
+            // intersections[0] = new Vector2D(); intersections[1] = new Vector2D(); //make sure thery filled by default
+            // //Vertical line collision
+            // //find innitial vertical line intersection point
+            // double HoriDistFromFirstVertLine = player.x() - ((int)player.x());//horizontal distance from first vertical line
+            // double intersectHeight = firstXMult * slope * HoriDistFromFirstVertLine; //acts as an offset from the cell
+            // //the player is currently in vertically
+            // //this one will hit a vertivcl line eventually
+            // for(double x = 0; x < 64; x = x + 1)
+            // {
+                // double y = firstXMult * (slope * x) + intersectHeight;
+                // double realX = secondXMult * x + player.x();
+                // double realY = thirdXMult * y + player.y();
+                // //graphics.fillRect((int)(realX * scale), (int)(realY * scale), 1, 1);
 
-    // //Vertical line collision
-    // //find innitial vertical line intersection point
-    // double HoriDistFromFirstVertLine = player.x() - ((int)player.x());//horizontal distance from first vertical line
-    // double intersectHeight = slope * HoriDistFromFirstVertLine; //acts as an offset from the cell
-    // //the player is currently in vertically
-    // //this one will hit a vertivcl line eventually
-    // for(int x = 0; x < 64; x++)
-    // {
-    // double y = (slope * x) + intersectHeight;
-    // double realX = x * 1 + player.x();
-    // double realY = y + player.y();
-    // graphics.fillRect((int)(realX * scale), (int)(realY * scale), 1, 1);
+                // if((int)realX < 0 || (int)realY < 0 || (int)realX > map.getMap().length - 1 || (int)realY > map.getMap()[0].length - 1)
+                // {
+                    // //just do nothing so I don't get an out of bonds error
+                // }
+                // else if(map.getMap()[(int)realY][(int)realX].equals("000") || map.getMap()[(int)realY][(int)realX].equals(" 0 "))
+                // {
+                    // //record wall intersection value and break
+                    // intersections[0] = new Vector2D(realX, realY);
+                    // break;
+                // }
+            // }
 
-    // if((int)realX < 0 || (int)realY < 0 || (int)realX > map.getMap().length - 1 || (int)realY > map.getMap()[0].length - 1)
-    // {
-    // //just do nothing so I don't get an out of bonds error
-    // }
-    // else if(map.getMap()[(int)realY][(int)realX].equals("000") || map.getMap()[(int)realY][(int)realX].equals(" 0 "))
-    // {
-    // //record wall intersection value and break
-    // intersections[0] = new Vector2D(realX, realY);
-    // break;
-    // }
-    // }
+            // //horizontal line collision
+            // //find the innitial horizontal line intersect point
+            // double VertDistFromFirstHoriLine = player.y() - ((int)player.y());//vertical distance from first vertical line
+            // double intersectBreadth = firstYMult * VertDistFromFirstHoriLine / slope; //acts as an offset from the cell
+            // //the player is currently in horizontally
+            // //this one will hit a horizontal line eventually
+            // for(double y = 0; y < 64; y = y + 1)
+            // {
+                // double x = firstYMult * (y / slope) + intersectBreadth;
+                // double realX = secondYMult * 1 * x + player.x();
+                // double realY = thirdYMult * y + player.y();
+                // //graphics.fillRect((int)(realX * scale), (int)(realY * scale), 1, 1);
 
-    // //horizontal line collision
-    // //find the innitial horizontal line intersect point
-    // double VertDistFromFirstHoriLine = player.y() - ((int)player.y());//vertical distance from first vertical line
-    // double intersectBreadth = VertDistFromFirstHoriLine / slope; //acts as an offset from the cell
-    // //the player is currently in horizontally
-    // //this one will hit a horizontal line eventually
-    // for(int y = 0; y < 64; y++)
-    // {
-    // double x = y / slope + intersectBreadth;
-    // double realX = x * -1 + player.x();
-    // double realY = y * -1 + player.y();
-    // graphics.fillRect((int)(realX * scale), (int)(realY * scale), 1, 1);
+                // if((int)realX < 0 || (int)realY < 0 || (int)realX > map.getMap().length - 1 || (int)realY > map.getMap()[0].length - 1)
+                // {
+                    // //just do nothing so I don't get an out of bonds error
+                // }
+                // else if(map.getMap()[(int)realY][(int)realX].equals("000") || map.getMap()[(int)realY][(int)realX].equals(" 0 "))
+                // {
+                    // //record wall intersection value and break
+                    // intersections[1] = new Vector2D(realX, realY);
+                    // break;
+                // }
+            // }
 
-    // if((int)realX < 0 || (int)realY < 0 || (int)realX > map.getMap().length - 1 || (int)realY > map.getMap()[0].length - 1)
-    // {
-    // //just do nothing so I don't get an out of bonds error
-    // }
-    // else if(map.getMap()[(int)realY][(int)realX].equals("000") || map.getMap()[(int)realY][(int)realX].equals(" 0 "))
-    // {
-    // //record wall intersection value and break
-    // intersections[1] = new Vector2D(realX, realY);
-    // break;
-    // }
-    // }
-    // }
-    // graphics.dispose();
+            // //calculate which intersection point is closest using distance formula
+            // Vector2D shortestRayCastCol = new Vector2D();
+            // double shortestRaycastDist = 0;
+            // double verticalLineAlgorithmDistance = Math.sqrt(Math.pow(intersections[0].x(), 2) + Math.pow(intersections[0].y(), 2));
+            // double horizontalLineAlgorithmDistance = Math.sqrt(Math.pow(intersections[1].x(), 2) + Math.pow(intersections[1].y(), 2));
+            // if(verticalLineAlgorithmDistance < horizontalLineAlgorithmDistance)
+            // {
+                // shortestRayCastCol = intersections[0];
+                // shortestRaycastDist = verticalLineAlgorithmDistance;
+            // }
+            // else
+            // {
+                // shortestRayCastCol = intersections[1];
+                // shortestRaycastDist = horizontalLineAlgorithmDistance;
+            // }
+            
+            // System.out.println(shortestRaycastDist);
+            
+            // //draw a line to the shortest raycast distance
+            // for(double x = 0; x < shortestRaycastDist; x = x + 0.1)
+            // {
+                // double y = firstXMult * (slope * x) + intersectHeight;
+                // double realX = secondXMult * x + player.x();
+                // double realY = thirdXMult * y + player.y();
+                // graphics.fillRect((int)(realX * scale), (int)(realY * scale), 1, 1);
+            // }
+        // }
+
+        // graphics.dispose();
     // }
     public void raycasts()
     {
@@ -192,7 +242,7 @@ public class MapRenderer
             int secondYMult = 1;
             int thirdXMult = 1;
             int thirdYMult = 1;
-            if(rayAngle <= 90)//fuckery
+            if(rayAngle <= 90)//blasphemy
             {
                 firstXMult = -1; secondXMult = 1; thirdXMult = 1;
                 firstYMult = -1; secondYMult = -1; thirdYMult = -1;
@@ -214,19 +264,19 @@ public class MapRenderer
             }
             Vector2D[] intersections = new Vector2D[2]; //set up the store of vertical and horizontal collisions
             intersections[0] = new Vector2D(); intersections[1] = new Vector2D(); //make sure thery filled by default
-
-            //Vertical line collision
+            //--CHECK HORIZONTAL LINES--
+            
             //find innitial vertical line intersection point
             double HoriDistFromFirstVertLine = player.x() - ((int)player.x());//horizontal distance from first vertical line
             double intersectHeight = firstXMult * slope * HoriDistFromFirstVertLine; //acts as an offset from the cell
             //the player is currently in vertically
             //this one will hit a vertivcl line eventually
-            for(int x = 0; x < 64; x++)
+            for(double x = 0; x < 64; x = x + 1)
             {
                 double y = firstXMult * (slope * x) + intersectHeight;
                 double realX = secondXMult * x + player.x();
                 double realY = thirdXMult * y + player.y();
-                graphics.fillRect((int)(realX * scale), (int)(realY * scale), 1, 1);
+                //graphics.fillRect((int)(realX * scale), (int)(realY * scale), 1, 1);
 
                 if((int)realX < 0 || (int)realY < 0 || (int)realX > map.getMap().length - 1 || (int)realY > map.getMap()[0].length - 1)
                 {
@@ -246,12 +296,12 @@ public class MapRenderer
             double intersectBreadth = firstYMult * VertDistFromFirstHoriLine / slope; //acts as an offset from the cell
             //the player is currently in horizontally
             //this one will hit a horizontal line eventually
-            for(int y = 0; y < 64; y++)
+            for(double y = 0; y < 64; y = y + 1)
             {
                 double x = firstYMult * (y / slope) + intersectBreadth;
                 double realX = secondYMult * 1 * x + player.x();
                 double realY = thirdYMult * y + player.y();
-                graphics.fillRect((int)(realX * scale), (int)(realY * scale), 1, 1);
+                //graphics.fillRect((int)(realX * scale), (int)(realY * scale), 1, 1);
 
                 if((int)realX < 0 || (int)realY < 0 || (int)realX > map.getMap().length - 1 || (int)realY > map.getMap()[0].length - 1)
                 {
@@ -264,7 +314,35 @@ public class MapRenderer
                     break;
                 }
             }
+
+            //calculate which intersection point is closest using distance formula
+            Vector2D shortestRayCastCol = new Vector2D();
+            double shortestRaycastDist = 0;
+            double verticalLineAlgorithmDistance = Math.sqrt(Math.pow(intersections[0].x(), 2) + Math.pow(intersections[0].y(), 2));
+            double horizontalLineAlgorithmDistance = Math.sqrt(Math.pow(intersections[1].x(), 2) + Math.pow(intersections[1].y(), 2));
+            if(verticalLineAlgorithmDistance < horizontalLineAlgorithmDistance)
+            {
+                shortestRayCastCol = intersections[0];
+                shortestRaycastDist = verticalLineAlgorithmDistance;
+            }
+            else
+            {
+                shortestRayCastCol = intersections[1];
+                shortestRaycastDist = horizontalLineAlgorithmDistance;
+            }
+            
+            System.out.println(shortestRaycastDist);
+            
+            //draw a line to the shortest raycast distance
+            for(double x = 0; x < shortestRaycastDist; x = x + 0.1)
+            {
+                double y = firstXMult * (slope * x) + intersectHeight;
+                double realX = secondXMult * x + player.x();
+                double realY = thirdXMult * y + player.y();
+                graphics.fillRect((int)(realX * scale), (int)(realY * scale), 1, 1);
+            }
         }
+
         graphics.dispose();
     }
 }

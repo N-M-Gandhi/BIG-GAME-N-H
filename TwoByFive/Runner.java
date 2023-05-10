@@ -21,11 +21,18 @@ public class Runner implements InputListener
         renderer = new Renderer(input);
         renderer.setTitle("Default TwoByFive Project Name");
         //walls
-        Wall wall1 = new Wall(10, true, 3, 6, map.getMap());
-        Wall wall2 = new Wall(20, true, 12, 10, map.getMap());
-        Wall wall3 = new Wall(10, false, 4, 17, map.getMap());
-        Wall wall4 = new Wall(10, true, 3, 5, map.getMap());
-        Wall wall5 = new Wall(10, true, 3, 4, map.getMap());
+        // Wall wall1 = new Wall(10, true, 3, 6, map.getMap());
+        // Wall wall2 = new Wall(20, true, 12, 10, map.getMap());
+        // Wall wall3 = new Wall(10, false, 4, 17, map.getMap());
+        // Wall wall4 = new Wall(10, true, 3, 5, map.getMap());
+        // Wall wall5 = new Wall(10, true, 3, 4, map.getMap());
+        
+        //outside walls
+        Wall wall8 = new Wall(map.getMap().length, true, 0, 0, map.getMap());
+        Wall wall6 = new Wall(map.getMap().length, false, 0, 0, map.getMap());
+        Wall wall7 = new Wall(map.getMap().length, true, 0, map.getMap().length - 1, map.getMap());
+        Wall wall9 = new Wall(map.getMap().length, false, map.getMap().length - 1, 0, map.getMap());
+        
         mapRenderer = new MapRenderer(32, input, map, player);
         mapRenderer.setTitle("TwoByFive Map Renderer");
         map.print();
