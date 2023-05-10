@@ -1,0 +1,16 @@
+#BlueJ class context
+comment0.target=Map
+comment0.text=\r\n\ Write\ a\ description\ of\ class\ Map\ here.\r\n\r\n\ @author\ (your\ name)\r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
+comment1.params=input
+comment1.target=Map(InputActivator)
+comment2.params=s\ p
+comment2.target=Map(int,\ Player)
+comment3.params=
+comment3.target=void\ print()
+comment4.params=
+comment4.target=java.lang.String[][]\ getMap()
+comment5.params=newMap
+comment5.target=void\ setMap(java.lang.String[][])
+comment6.params=x\ y\ info
+comment6.target=void\ setMap(int,\ int,\ java.lang.String)
+numComments=7
