@@ -13,6 +13,7 @@ public class Renderer
     private int slices;
     private int scale;
     private int height;
+    private int maxViewDist;
     private String[][] view;
     //private InputListener input;
 
@@ -25,6 +26,7 @@ public class Renderer
         slices = 320;
         scale = 2;
         height = 320;
+        maxViewDist = 16;
         view = new String[height * 1][slices * 1];
         //input = i;
         for(int y = 0; y < view.length; y++)
@@ -106,8 +108,9 @@ public class Renderer
             double rayLength = Math.sqrt(Math.pow(collisionPoint.x() - player.x(), 2) + Math.pow(collisionPoint.y() - player.y(), 2)); //the length of a casted ray from player position at rayAngle
             rayLength = rayLength * Math.cos(Math.toRadians(rayAngle - player.r())); //remove fish eye distortion
             int sliceLength = 0;
-            if(height > (int)rayLength * height / 16 && (int)rayLength * height / 16 > 0)
-            {sliceLength = (int)(height - rayLength * height / 16);} // calculate length of slice
+            double screenScaledRayLength = rayLength * (double)height / (double)maxViewDist;
+            if(height > screenScaledRayLength && screenScaledRayLength > 0)
+            {sliceLength = (int)(height - screenScaledRayLength);} // calculate length of slice
 
             //fill slice with blank space so I dont get permanenet screen tarring
             for(int y = 0; y < view.length; y++)
