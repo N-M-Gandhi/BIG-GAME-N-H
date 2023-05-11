@@ -78,7 +78,7 @@ public class MapRenderer
         {
             for(int x = 0; x< map.getMap()[0].length; x++)
             {
-                if(map.getMap()[y][x].equals("000") || map.getMap()[y][x].equals(" 0 "))
+                if(map.getMap()[y][x].equals("1"))
                 {
                     graphics = image.createGraphics();
                     graphics.setColor(new Color(0,0,255));
@@ -100,7 +100,7 @@ public class MapRenderer
         
 
         int feildOfVeiw = 90;
-        int slices = 90;
+        int slices = 30;
 
         double viewIncrement = (double)feildOfVeiw/(double)(slices-1);
         for(int i = 0; i < slices; i++)
@@ -108,47 +108,47 @@ public class MapRenderer
             double rayAngle = player.r() + 45 - viewIncrement * i; //the angle of this speciic raycast
             double slope = Math.tan(Math.toRadians(rayAngle));//calculate slope of rayCast
             Vector2D collisionPoint = RayCast.cast(rayAngle, player, map.getMap()); //returns collision Vector2D
-            double raycastDist = Math.sqrt(Math.pow(collisionPoint.x(), 2) + Math.pow(collisionPoint.y(), 2));
-            System.out.println(raycastDist);
+            double raycastDist = Math.sqrt(Math.pow(collisionPoint.x() - player.x(), 2) + Math.pow(collisionPoint.y() - player.y(), 2));
+            //System.out.println(raycastDist);
             
             //in theory, better at drawing the line, but in actuality not(doesnt show spike)
-            // graphics.drawLine((int)(player.x() * scale), (int)(player.y() * scale), 
-                            // (int)(collisionPoint.x() * scale), (int)(collisionPoint.y() * scale));
+            graphics.drawLine((int)(player.x() * scale), (int)(player.y() * scale), 
+                            (int)(collisionPoint.x() * scale), (int)(collisionPoint.y() * scale));
             
-            //draw a line to the shortest raycast distance
-            int firstXMult = 1;
-            int firstYMult = 1;
-            int secondXMult = 1;
-            int secondYMult = 1;
-            int thirdXMult = 1;
-            int thirdYMult = 1;
-            if(rayAngle <= 90)//blasphemy
-            {
-                firstXMult = -1; secondXMult = 1; thirdXMult = 1;
-                firstYMult = -1; secondYMult = -1; thirdYMult = -1;
-            }
-            else if(rayAngle > 90 && rayAngle <= 180)
-            {
-                firstXMult = 1; secondXMult = -1; thirdXMult = 1;
-                firstYMult = -1; secondYMult = -1; thirdYMult = -1;
-            }
-            else if(rayAngle > 180 && rayAngle <= 270)
-            {
-                firstXMult = 1; secondXMult = -1; thirdXMult = 1;
-                firstYMult = 1; secondYMult = -1; thirdYMult = 1;
-            }
-            else if(rayAngle > 270)
-            {
-                firstXMult = -1; secondXMult = 1; thirdXMult = 1;
-                firstYMult = -1; secondYMult = 1; thirdYMult = 1;
-            }
-            for(double x = 0; Math.abs(slope * x) < raycastDist; x = x + 0.1)
-            {
-                double y = firstXMult * (slope * x);
-                double realX = secondXMult * x + player.x();
-                double realY = thirdXMult * y + player.y();
-                graphics.fillRect((int)(realX * scale), (int)(realY * scale), 1, 1);
-            }
+            // //draw a line to the shortest raycast distance
+            // int firstXMult = 1;
+            // int firstYMult = 1;
+            // int secondXMult = 1;
+            // int secondYMult = 1;
+            // int thirdXMult = 1;
+            // int thirdYMult = 1;
+            // if(rayAngle <= 90)//blasphemy
+            // {
+                // firstXMult = -1; secondXMult = 1; thirdXMult = 1;
+                // firstYMult = -1; secondYMult = -1; thirdYMult = -1;
+            // }
+            // else if(rayAngle > 90 && rayAngle <= 180)
+            // {
+                // firstXMult = 1; secondXMult = -1; thirdXMult = 1;
+                // firstYMult = -1; secondYMult = -1; thirdYMult = -1;
+            // }
+            // else if(rayAngle > 180 && rayAngle <= 270)
+            // {
+                // firstXMult = 1; secondXMult = -1; thirdXMult = 1;
+                // firstYMult = 1; secondYMult = -1; thirdYMult = 1;
+            // }
+            // else if(rayAngle > 270)
+            // {
+                // firstXMult = -1; secondXMult = 1; thirdXMult = 1;
+                // firstYMult = -1; secondYMult = 1; thirdYMult = 1;
+            // }
+            // for(double x = 0; Math.abs(slope * x) < raycastDist; x = x + 0.1)
+            // {
+                // double y = firstXMult * (slope * x);
+                // double realX = secondXMult * x + player.x();
+                // double realY = thirdXMult * y + player.y();
+                // graphics.fillRect((int)(realX * scale), (int)(realY * scale), 1, 1);
+            // }
         }
         
         frame.repaint();

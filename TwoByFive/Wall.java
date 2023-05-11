@@ -37,14 +37,14 @@ public class Wall
         {
             for(int i = xPos; i < xPos + length; i++)
             {
-                map[yPos][i] = "000";
+                map[yPos][i] = "1";
             }
         }
         if(!horizontal)
         {
             for(int i = yPos; i < yPos + length; i++)
             {
-                map[i][xPos] = " 0 ";
+                map[i][xPos] = "1";
             }
         }
     }

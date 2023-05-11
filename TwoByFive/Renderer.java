@@ -103,9 +103,10 @@ public class Renderer
         {
             double rayAngle = player.r() + 45 - viewIncrement * i; //the angle of this speciic raycast
             Vector2D collisionPoint = RayCast.cast(rayAngle, player, map); //returns collision Vector2D
-            double rayLength = Math.sqrt(Math.pow(collisionPoint.x(), 2) + Math.pow(collisionPoint.y(), 2));; //the length of a casted ray from player position at rayAngle
+            double rayLength = Math.sqrt(Math.pow(collisionPoint.x() - player.x(), 2) + Math.pow(collisionPoint.y() - player.y(), 2)); //the length of a casted ray from player position at rayAngle
+            rayLength = rayLength * Math.cos(Math.toRadians(rayAngle - player.r())); //remove fish eye distortion
             int sliceLength = 0;
-            if(height > (int)rayLength * height / 32 && (int)rayLength * height / 32 > 0)
+            if(height > (int)rayLength * height / 16 && (int)rayLength * height / 16 > 0)
             {sliceLength = (int)(height - rayLength * height / 16);} // calculate length of slice
 
             //fill slice with blank space so I dont get permanenet screen tarring

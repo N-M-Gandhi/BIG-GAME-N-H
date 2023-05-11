@@ -39,12 +39,12 @@ public class Player
     {
         map[(int)this.y()][(int)this.x()] = " . ";
         if(!(xPos + 1 > map.length - 1) && !(xPos + 1 < 0) && 
-        !(map[(int)this.y()][(int)this.x() + 1].equals("000")) && !(map[(int)this.y()][(int)this.x() + 1].equals(" 0 ")))
+        !(map[(int)this.y()][(int)this.x() + 1].equals("1")))
         {
             if(dist > 0){xPos = xPos + dist;}
         }
         if(!(xPos - 1 > map.length - 1) && !(xPos - 1 < 0) && 
-        !(map[(int)this.y()][(int)this.x() - 1].equals("000")) && !(map[(int)this.y()][(int)this.x() - 1].equals(" 0 ")))
+        !(map[(int)this.y()][(int)this.x() - 1].equals("1")))
         {
             if(dist < 0){xPos = xPos + dist;}
         }
@@ -64,12 +64,12 @@ public class Player
     {
         map[(int)this.y()][(int)this.x()] = " . ";
         if(!(yPos + 1 > map.length - 1) && !(yPos + 1 < 0) && 
-        !(map[(int)this.y() + 1][(int)this.x()].equals("000")) && !(map[(int)this.y() + 1][(int)this.x()].equals(" 0 ")))
+        !(map[(int)this.y() + 1][(int)this.x()].equals("1")))
         {
             if(dist > 0){yPos = yPos + dist;}
         }
         if(!(yPos - 1 > map.length - 1) && !(yPos - 1 < 0) && 
-        !(map[(int)this.y() - 1][(int)this.x()].equals("000")) && !(map[(int)this.y() - 1][(int)this.x()].equals(" 0 ")))
+        !(map[(int)this.y() - 1][(int)this.x()].equals("1")))
         {
             if(dist < 0){yPos = yPos + dist;}
         }

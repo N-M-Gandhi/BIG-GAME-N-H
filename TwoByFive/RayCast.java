@@ -66,7 +66,7 @@ public class RayCast
                 //just do nothing so I don't get an out of bonds error
                 break;
             }
-            else if(map[(int)realY][(int)realX].equals("000") || map[(int)realY][(int)realX].equals(" 0 "))
+            else if(map[(int)realY][(int)realX].equals("1"))
             {
                 //record wall intersection value and break
                 intersections[0] = new Vector2D(realX, realY);
@@ -90,7 +90,7 @@ public class RayCast
                 //just do nothing so I don't get an out of bonds error
                 break;
             }
-            else if(map[(int)realY][(int)realX].equals("000") || map[(int)realY][(int)realX].equals(" 0 "))
+            else if(map[(int)realY][(int)realX].equals("1"))
             {
                 //record wall intersection value and break
                 intersections[1] = new Vector2D(realX, realY);
@@ -109,5 +109,55 @@ public class RayCast
         {
             return intersections[1];
         }
+    }
+
+    public static Vector2D cast2(double rayAngle, Player player, String[][] map)
+    {
+        if(rayAngle < 0)
+        {
+            rayAngle = rayAngle + 360;
+        }
+        if(rayAngle > 360)
+        {
+            rayAngle = rayAngle - 360;
+        }
+        
+        int r,mx,my,mp,dof,side; float vx,vy,rx,ry,xo=0,yo=0,disV,disH;
+        float py = (float)player.y(); float px = (float)player.x();
+        int mapX = map[0].length; int mapY = map.length;
+        double ra = Math.toRadians(rayAngle);
+
+        //---Vertical--- 
+        dof=0; side=0; disV=100000;
+        float Tan=(float)Math.tan(ra);
+        if(Math.cos(ra)> 0.001){ rx=(((int)px>>6)<<6)+64;      ry=(px-rx)*Tan+py; xo= 64; yo=-xo*Tan;}//looking left
+        else if(Math.cos(ra)<-0.001){ rx=(((int)px>>6)<<6) -0.0001f; ry=(px-rx)*Tan+py; xo=-64; yo=-xo*Tan;}//looking right
+        else { rx=px; ry=py; dof=8;}                                                  //looking up or down. no hit  
+
+        while(dof<8) 
+        { 
+            mx=(int)(rx)>>6; my=(int)(ry)>>6; mp=my*mapX+mx;                     
+            if(my < mapY && mx < mapX && my >= 0 && mx >= 0 && map[my][mx].equals("1")){ dof=8; disV=(float)Math.cos(ra)*(rx-px)-(float)Math.cos(ra)*(ry-py);}//hit         
+            else{ rx+=xo; ry+=yo; dof+=1;}                                               //check next horizontal
+        } 
+        vx=rx; vy=ry;
+
+        //---Horizontal---
+        dof=0; disH=100000;
+        Tan=1.0f/Tan; 
+        if(Math.sin(ra)> 0.001){ ry=(((int)py>>6)<<6) -0.0001f; rx=(py-ry)*Tan+px; yo=-64; xo=-yo*Tan;}//looking up 
+        else if(Math.sin(ra)<-0.001){ ry=(((int)py>>6)<<6)+64;      rx=(py-ry)*Tan+px; yo= 64; xo=-yo*Tan;}//looking down
+        else{ rx=px; ry=py; dof=8;}                                                   //looking straight left or right
+
+        while(dof<8) 
+        { 
+            mx=(int)(rx)>>6; my=(int)(ry)>>6; mp=my*mapX+mx;                          
+            if(my < mapY && mx < mapX && my >= 0 && mx >= 0 && map[my][mx].equals("1")){ dof=8; disH=(float)Math.cos(ra)*(rx-px)-(float)Math.sin(ra)*(ry-py);}//hit         
+            else{ rx+=xo; ry+=yo; dof+=1;}                                               //check next horizontal
+        } 
+
+        if(disV<disH){ rx=vx; ry=vy; disH=disV;}                  //horizontal hit first
+        
+        return new Vector2D(rx, ry);
     }
 }
