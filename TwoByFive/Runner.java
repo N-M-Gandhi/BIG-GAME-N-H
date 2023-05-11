@@ -23,7 +23,7 @@ public class Runner implements InputListener
         //walls
         Wall wall1 = new Wall(10, true, 3, 6, map.getMap());
         Wall wall2 = new Wall(20, true, 12, 10, map.getMap());
-        // Wall wall3 = new Wall(10, false, 4, 17, map.getMap());
+         Wall wall3 = new Wall(10, false, 4, 17, map.getMap());
         // Wall wall4 = new Wall(10, true, 3, 5, map.getMap());
         // Wall wall5 = new Wall(10, true, 3, 4, map.getMap());
         

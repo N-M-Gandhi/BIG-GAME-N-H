@@ -59,7 +59,7 @@ public class RayCast
         for(int x = 0; x < 64; x++)
         {
             double y = firstXMult * (slope * x) + intersectHeight;
-            double realX = secondXMult * x + player.x();
+            double realX = secondXMult * x + (int)player.x();
             double realY = thirdXMult * y + player.y();
             if((int)realX < 0 || (int)realY < 0 || (int)realX > map.length - 1 || (int)realY > map[0].length - 1)
             {
@@ -84,7 +84,7 @@ public class RayCast
         {
             double x = firstYMult * y / slope + intersectBreadth;
             double realX = secondYMult * x + player.x();
-            double realY = thirdYMult * y + player.y();
+            double realY = thirdYMult * y + (int)player.y();
             if((int)realX < 0 || (int)realY < 0 || (int)realX > map.length - 1 || (int)realY > map[0].length - 1)
             {
                 //just do nothing so I don't get an out of bonds error
