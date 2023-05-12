@@ -26,25 +26,35 @@ public class RayCast
         int secondYMult = 1;
         int thirdXMult = 1;
         int thirdYMult = 1;
-        if(rayAngle <= 90)//fuckery
+        int extraXCellCheck = 0;
+        int extraYCellCheck = 0;
+        if(rayAngle <= 90)//blasphemy
         {
             firstXMult = -1; secondXMult = 1; thirdXMult = 1;
             firstYMult = -1; secondYMult = -1; thirdYMult = -1;
+            extraXCellCheck = 0;
+            extraYCellCheck = -1;
         }
-        else if(rayAngle > 90 && rayAngle <= 180)
+        else if(rayAngle > 90 && rayAngle <= 180) //2nd quadrant
         {
             firstXMult = 1; secondXMult = -1; thirdXMult = 1;
             firstYMult = -1; secondYMult = -1; thirdYMult = -1;
+            extraXCellCheck = -1;
+            extraYCellCheck = -1;
         }
-        else if(rayAngle > 180 && rayAngle <= 270)
+        else if(rayAngle > 180 && rayAngle <= 270) //3rd quadrant
         {
             firstXMult = 1; secondXMult = -1; thirdXMult = 1;
             firstYMult = 1; secondYMult = -1; thirdYMult = 1;
+            extraXCellCheck = -1;
+            extraYCellCheck = 0;
         }
-        else if(rayAngle > 270)
+        else if(rayAngle > 270) //4th quadrant
         {
             firstXMult = -1; secondXMult = 1; thirdXMult = 1;
             firstYMult = -1; secondYMult = 1; thirdYMult = 1;
+            //extraXCellCheck = 0;
+            //extraYCellCheck = -1;
         }
         //if(rayAngle > 180 && rayAngle < 270){stepDirection = -1;}
         Vector2D[] intersections = new Vector2D[2]; //set up the store of vertical and horizontal collisions
@@ -66,7 +76,7 @@ public class RayCast
                 //just do nothing so I don't get an out of bonds error
                 break;
             }
-            else if(map[(int)realY][(int)realX].equals("1"))
+            else if(map[(int)realY][(int)realX].equals("1") || map[(int)realY][(int)realX + extraXCellCheck].equals("1"))
             {
                 //record wall intersection value and break
                 intersections[0] = new Vector2D(realX, realY);
@@ -90,7 +100,7 @@ public class RayCast
                 //just do nothing so I don't get an out of bonds error
                 break;
             }
-            else if(map[(int)realY][(int)realX].equals("1"))
+            else if(map[(int)realY][(int)realX].equals("1") || map[(int)realY + extraYCellCheck][(int)realX].equals("1"))
             {
                 //record wall intersection value and break
                 intersections[1] = new Vector2D(realX, realY);
