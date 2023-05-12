@@ -111,7 +111,7 @@ public class Renderer
             //double screenScaledRayLength = rayLength * (double)height / (double)maxViewDist;
             //image size based off of distance formula
             //x/360 = (wall height)/((2 pi) * distance)
-            double screenRatio = 3/(2 * (Math.PI) * rayLength); //makes walls 3 meters high
+            double screenRatio = 5/(2 * (Math.PI) * rayLength); //makes walls 3 meters high
             double screenScaledRayLength = height * screenRatio;
             if(height > screenScaledRayLength && screenScaledRayLength > 0)
             {sliceLength = (int)(screenScaledRayLength);} // calculate length of slice

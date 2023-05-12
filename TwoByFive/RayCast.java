@@ -39,14 +39,14 @@ public class RayCast
         {
             firstXMult = 1; secondXMult = -1; thirdXMult = 1;
             firstYMult = -1; secondYMult = -1; thirdYMult = -1;
-            //extraXCellCheck = -1;
-            //extraYCellCheck = -1;
+            extraXCellCheck = -1;
+            //extraYCellCheck = 1;
         }
         else if(rayAngle > 180 && rayAngle <= 270) //3rd quadrant
         {
             firstXMult = 1; secondXMult = -1; thirdXMult = 1;
             firstYMult = 1; secondYMult = -1; thirdYMult = 1;
-            //extraXCellCheck = -1;
+            extraXCellCheck = -1;
             //extraYCellCheck = 0;
         }
         else if(rayAngle > 270) //4th quadrant
