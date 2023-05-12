@@ -100,14 +100,14 @@ public class MapRenderer
         
 
         int feildOfVeiw = 90;
-        int slices = 30;
+        int slices = 320;
 
         double viewIncrement = (double)feildOfVeiw/(double)(slices-1);
         for(int i = 0; i < slices; i++)
         {
             double rayAngle = player.r() + 45 - viewIncrement * i; //the angle of this speciic raycast
             double slope = Math.tan(Math.toRadians(rayAngle));//calculate slope of rayCast
-            Vector2D collisionPoint = RayCast.cast(rayAngle, player, map.getMap()); //returns collision Vector2D
+            CastInfo collisionPoint = RayCast.cast(rayAngle, player, map.getMap()); //returns collision Vector2D
             double raycastDist = Math.sqrt(Math.pow(collisionPoint.x() - player.x(), 2) + Math.pow(collisionPoint.y() - player.y(), 2));
             //System.out.println(raycastDist);
             

@@ -7,7 +7,7 @@
  */
 public class RayCast
 {
-    public static Vector2D cast(double rayAngle, Player player, String[][] map)
+    public static CastInfo cast(double rayAngle, Player player, String[][] map)
     {
         if(rayAngle < 0)
         {
@@ -32,22 +32,22 @@ public class RayCast
         {
             firstXMult = -1; secondXMult = 1; thirdXMult = 1;
             firstYMult = -1; secondYMult = -1; thirdYMult = -1;
-            extraXCellCheck = 0;
-            extraYCellCheck = -1;
+            //extraXCellCheck = 0;
+            //extraYCellCheck = -1;
         }
         else if(rayAngle > 90 && rayAngle <= 180) //2nd quadrant
         {
             firstXMult = 1; secondXMult = -1; thirdXMult = 1;
             firstYMult = -1; secondYMult = -1; thirdYMult = -1;
-            extraXCellCheck = -1;
-            extraYCellCheck = -1;
+            //extraXCellCheck = -1;
+            //extraYCellCheck = -1;
         }
         else if(rayAngle > 180 && rayAngle <= 270) //3rd quadrant
         {
             firstXMult = 1; secondXMult = -1; thirdXMult = 1;
             firstYMult = 1; secondYMult = -1; thirdYMult = 1;
-            extraXCellCheck = -1;
-            extraYCellCheck = 0;
+            //extraXCellCheck = -1;
+            //extraYCellCheck = 0;
         }
         else if(rayAngle > 270) //4th quadrant
         {
@@ -57,8 +57,9 @@ public class RayCast
             //extraYCellCheck = -1;
         }
         //if(rayAngle > 180 && rayAngle < 270){stepDirection = -1;}
-        Vector2D[] intersections = new Vector2D[2]; //set up the store of vertical and horizontal collisions
-        intersections[0] = new Vector2D(999, 999); intersections[1] = new Vector2D(999, 999); //make sure thery filled by default
+        CastInfo[] intersections = new CastInfo[2]; //set up the store of vertical and horizontal collisions
+        intersections[0] = new CastInfo(new Vector2D(999, 999), 1, false);
+        intersections[1] = new CastInfo(new Vector2D(999, 999), 1, false);; //make sure thery filled by default
 
         //Vertical line collision
         //find innitial vertical line intersection point
@@ -66,7 +67,7 @@ public class RayCast
         double intersectHeight = firstXMult * slope * HoriDistFromFirstVertLine; //acts as an offset from the cell
         //the player is currently in vertically
         //this one will hit a vertivcl line eventually
-        for(int x = 0; x < 64; x++)
+        for(double x = 0; x < 64; x+=1)
         {
             double y = firstXMult * (slope * x) + intersectHeight;
             double realX = secondXMult * x + (int)player.x();
@@ -79,7 +80,7 @@ public class RayCast
             else if(map[(int)realY][(int)realX].equals("1") || map[(int)realY][(int)realX + extraXCellCheck].equals("1"))
             {
                 //record wall intersection value and break
-                intersections[0] = new Vector2D(realX, realY);
+                intersections[0].setInfo(new Vector2D(realX, realY), 1, true);
                 break;
             }
         }
@@ -90,7 +91,7 @@ public class RayCast
         double intersectBreadth = firstYMult * VertDistFromFirstHoriLine / slope; //acts as an offset from the cell
         //the player is currently in horizontally
         //this one will hit a horizontal line eventually
-        for(int y = 0; y < 64; y++)
+        for(double y = 0; y < 64; y+=1)
         {
             double x = firstYMult * y / slope + intersectBreadth;
             double realX = secondYMult * x + player.x();
@@ -103,7 +104,7 @@ public class RayCast
             else if(map[(int)realY][(int)realX].equals("1") || map[(int)realY + extraYCellCheck][(int)realX].equals("1"))
             {
                 //record wall intersection value and break
-                intersections[1] = new Vector2D(realX, realY);
+                intersections[0].setInfo(new Vector2D(realX, realY), 1, false);;
                 break;
             }
         }

@@ -1,0 +1,26 @@
+#BlueJ class context
+comment0.target=CastInfo
+comment0.text=\r\n\ Write\ a\ description\ of\ class\ CastInfo\ here.\r\n\r\n\ @author\ (your\ name)\r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
+comment1.params=
+comment1.target=CastInfo()
+comment10.params=w
+comment10.target=void\ setWall(int)
+comment11.params=s
+comment11.target=void\ setShade(boolean)
+comment2.params=p\ w\ s
+comment2.target=CastInfo(Vector2D,\ int,\ boolean)
+comment3.params=
+comment3.target=double\ x()
+comment4.params=
+comment4.target=double\ y()
+comment5.params=
+comment5.target=Vector2D\ getPosition()
+comment6.params=
+comment6.target=int\ getWall()
+comment7.params=
+comment7.target=boolean\ getShade()
+comment8.params=p\ w\ s
+comment8.target=void\ setInfo(Vector2D,\ int,\ boolean)
+comment9.params=p
+comment9.target=void\ setPosition(Vector2D)
+numComments=12

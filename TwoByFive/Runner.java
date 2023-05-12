@@ -72,7 +72,7 @@ public class Runner implements InputListener
         boolean dead = false;
         while(!dead)
         {
-            try { Thread.sleep(1000/10); } catch(Exception e) {}
+            try { Thread.sleep(1000/30); } catch(Exception e) {}
             //map.print();
             mapRenderer.render();
             renderer.render(player, map.getMap());
@@ -147,21 +147,21 @@ public class Runner implements InputListener
         // System.out.println((int)(distX) * 1);
         // System.out.println((int)(distY) * 1);
         
-        player.moveY(1, map.getMap());
+        player.moveY(0.25, map.getMap());
     }
 
     public void aPressed()
     {
         // player.transR(6, map.getMap());
         
-        player.moveX(-1, map.getMap());
+        player.moveX(-0.25, map.getMap());
     }
 
     public void dPressed()
     {
         // player.transR(-6, map.getMap());
         
-        player.moveX(1, map.getMap());
+        player.moveX(0.25, map.getMap());
     }
 
     public void qPressed()

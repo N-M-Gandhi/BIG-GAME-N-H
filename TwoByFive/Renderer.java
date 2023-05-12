@@ -104,13 +104,17 @@ public class Renderer
         for(int i = 0; i < slices; i++)
         {
             double rayAngle = player.r() + 45 - viewIncrement * i; //the angle of this speciic raycast
-            Vector2D collisionPoint = RayCast.cast(rayAngle, player, map); //returns collision Vector2D
+            CastInfo collisionPoint = RayCast.cast(rayAngle, player, map); //returns collision Vector2D
             double rayLength = Math.sqrt(Math.pow(collisionPoint.x() - player.x(), 2) + Math.pow(collisionPoint.y() - player.y(), 2)); //the length of a casted ray from player position at rayAngle
             rayLength = rayLength * Math.cos(Math.toRadians(rayAngle - player.r())); //remove fish eye distortion
             int sliceLength = 0;
-            double screenScaledRayLength = rayLength * (double)height / (double)maxViewDist;
+            //double screenScaledRayLength = rayLength * (double)height / (double)maxViewDist;
+            //image size based off of distance formula
+            //x/360 = (wall height)/((2 pi) * distance)
+            double screenRatio = 3/(2 * (Math.PI) * rayLength); //makes walls 3 meters high
+            double screenScaledRayLength = height * screenRatio;
             if(height > screenScaledRayLength && screenScaledRayLength > 0)
-            {sliceLength = (int)(height - screenScaledRayLength);} // calculate length of slice
+            {sliceLength = (int)(screenScaledRayLength);} // calculate length of slice
 
             //fill slice with blank space so I dont get permanenet screen tarring
             for(int y = 0; y < view.length; y++)
@@ -137,6 +141,10 @@ public class Renderer
             {
                 graphics = image.createGraphics();
                 graphics.setColor(new Color(0,0,255));
+                if(collisionPoint.getShade())
+                {
+                    graphics.setColor(new Color(0,0,125));//shade darker
+                }
                 graphics.fillRect(i*scale, y*scale, 1*scale, 1*scale);
                 graphics.dispose();
             }
