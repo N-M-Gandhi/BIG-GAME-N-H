@@ -13,8 +13,6 @@ public class Renderer
     private int slices;
     private int scale;
     private int height;
-    private int maxViewDist;
-    private String[][] view;
     //private InputListener input;
 
     private static final Color BACKGROUND = Color.BLACK;
@@ -26,16 +24,6 @@ public class Renderer
         slices = 320;
         scale = 2;
         height = 320;
-        maxViewDist = 16;
-        view = new String[height * 1][slices * 1];
-        //input = i;
-        for(int y = 0; y < view.length; y++)
-        {
-            for(int x = 0; x < view[y].length; x++)
-            {
-                view[y][x] = " . ";
-            }
-        }
 
         //Schedule a job for the event-dispatching thread:
         //creating and showing this application's GUI.
@@ -77,21 +65,6 @@ public class Renderer
         frame.setTitle(title);
     }
 
-    public Renderer(int s, int w, int v)
-    {
-        slices = s;
-        scale = w;
-        height = v;
-        view = new String[height * scale][slices * scale];
-        for(int y = 0; y < view.length; y++)
-        {
-            for(int x = 0; x < view[y].length; x++)
-            {
-                view[y][x] = " . ";
-            }
-        }
-    }
-
     public void render(Player player, String[][] map)
     {
         //set up window
@@ -99,7 +72,7 @@ public class Renderer
         graphics.setColor(BACKGROUND);
         graphics.fillRect(0, 0, image.getWidth(), image.getHeight());
         graphics.dispose();
-
+        double verticalRayHits = 0;
         double viewIncrement = (double)90/(double)(slices-1); //how many degrees is ech slice from each other
         for(int i = 0; i < slices; i++)
         {
@@ -107,20 +80,25 @@ public class Renderer
             CastInfo collisionPoint = RayCast.cast(rayAngle, player, map); //returns collision Vector2D
             double rayLength = Math.sqrt(Math.pow(collisionPoint.x() - player.x(), 2) + Math.pow(collisionPoint.y() - player.y(), 2)); //the length of a casted ray from player position at rayAngle
             rayLength = rayLength * Math.cos(Math.toRadians(rayAngle - player.r())); //remove fish eye distortion
-            int sliceLength = 0;
-            //double screenScaledRayLength = rayLength * (double)height / (double)maxViewDist;
             //image size based off of distance formula
             //x/360 = (wall height)/((2 pi) * distance)
-            double screenRatio = 5/(2 * (Math.PI) * rayLength); //makes walls 3 meters high
-            double screenScaledRayLength = height * screenRatio;
-            if(height > screenScaledRayLength && screenScaledRayLength > 0)
-            {sliceLength = (int)(screenScaledRayLength);} // calculate length of slice
+            double screenRatio = 3.80/(2 * (Math.PI) * rayLength); //makes walls 3 meters high
+            int screenScaledRayLength = (int)(height * screenRatio); //calculate length of slice
+            int sliceLength = 0;
+            if(screenScaledRayLength >= height){sliceLength = height -1;}//if greater than screen, slice length set to maximum
+            if(screenScaledRayLength < height && (int)screenScaledRayLength >= 0)
+            {sliceLength = (int)(screenScaledRayLength);}// set slicelength if within screen
+
+            if(collisionPoint.getShade())
+            {
+                verticalRayHits++;
+            }
 
             //fill slice with blank space so I dont get permanenet screen tarring
-            for(int y = 0; y < view.length; y++)
+            for(int y = 0; y < height; y++)
             {
                 //fill in ceiling
-                if(y < view.length/2)
+                if(y < height/2)
                 {
                     graphics = image.createGraphics();
                     graphics.setColor(BACKGROUND);
@@ -137,7 +115,7 @@ public class Renderer
                 }
             }
             //fill a slice to said length with at desired length
-            for(int y = view.length/2 - sliceLength/2; y <  view.length/2 + sliceLength/2; y++)
+            for(int y = height/2 - sliceLength/2; y <  height/2 + sliceLength/2; y++)
             {
                 graphics = image.createGraphics();
                 graphics.setColor(new Color(0,0,255));
@@ -149,24 +127,7 @@ public class Renderer
                 graphics.dispose();
             }
         }   
+        System.out.println((int)((verticalRayHits/slices) * 1000)/10 + "%");
         frame.repaint();
-    }
-
-    public void print()
-    {
-        String output = "";
-        for(int y = 0; y < view.length - 1; y++)
-        {
-            for(int x = 0; x < view[y].length -1; x++)
-            {
-                // System.out.println("3");
-                // System.out.println(x);
-                // System.out.println(view[y].length -1);
-                // if((int)(Math.random()*4) == 2){System.out.println("AAAAHAHAHAHAH");}
-                output += view[y][x];
-            }
-            output += "\n";
-        }
-        System.out.println(output);
     }
 }

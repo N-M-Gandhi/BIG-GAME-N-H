@@ -99,8 +99,8 @@ public class MapRenderer
         graphics.setColor(new Color(0,255,0));
         
 
-        int feildOfVeiw = 90;
-        int slices = 320;
+        int feildOfVeiw = 360;
+        int slices = 360;
 
         double viewIncrement = (double)feildOfVeiw/(double)(slices-1);
         for(int i = 0; i < slices; i++)
