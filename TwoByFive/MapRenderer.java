@@ -14,7 +14,7 @@ public class MapRenderer
     private Map map;
     private Player player;
 
-    private static final Color BACKGROUND = Color.BLACK;
+    private static final Color BACKGROUND = Color.WHITE;
     private JFrame frame;
     private BufferedImage image;
 
@@ -78,11 +78,15 @@ public class MapRenderer
         {
             for(int x = 0; x< map.getMap()[0].length; x++)
             {
+                graphics = image.createGraphics();
+                graphics.setColor(new Color(0,0,0));
+                graphics.fillRect(x*scale + 1, y*scale + 1, 1*(scale-1), 1*(scale-1));
+                graphics.dispose();
                 if(map.getMap()[y][x].equals("1"))
                 {
                     graphics = image.createGraphics();
                     graphics.setColor(new Color(0,0,255));
-                    graphics.fillRect(x*scale, y*scale, 1*scale, 1*scale);
+                    graphics.fillRect(x*scale + 1, y*scale + 1, 1*(scale-1), 1*(scale-1));;
                     graphics.dispose();
                 }
             }
@@ -91,7 +95,7 @@ public class MapRenderer
         //render player
         graphics = image.createGraphics();
         graphics.setColor(new Color(255,0,0));
-        graphics.fillRect((int)player.x()*scale, (int)player.y()*scale, 1*scale, 1*scale);
+        graphics.fillRect((int)player.x()*scale + 1, (int)player.y()*scale + 1, 1*(scale-1), 1*(scale-1));
         graphics.dispose();
 
         //render rayCasts
@@ -99,8 +103,8 @@ public class MapRenderer
         graphics.setColor(new Color(0,255,0));
         
 
-        int feildOfVeiw = 360;
-        int slices = 360;
+        int feildOfVeiw = 90;
+        int slices = 90;
 
         double viewIncrement = (double)feildOfVeiw/(double)(slices-1);
         for(int i = 0; i < slices; i++)
@@ -108,7 +112,8 @@ public class MapRenderer
             double rayAngle = player.r() + 45 - viewIncrement * i; //the angle of this speciic raycast
             double slope = Math.tan(Math.toRadians(rayAngle));//calculate slope of rayCast
             CastInfo collisionPoint = RayCast.cast(rayAngle, player, map.getMap()); //returns collision Vector2D
-            double raycastDist = Math.sqrt(Math.pow(collisionPoint.x() - player.x(), 2) + Math.pow(collisionPoint.y() - player.y(), 2));
+            double raycastDist = Math.sqrt(Math.pow(collisionPoint.x() - player.x(), 2) 
+                                            + Math.pow(collisionPoint.y() - player.y(), 2));
             //System.out.println(raycastDist);
             
             //in theory, better at drawing the line, but in actuality not(doesnt show spike)

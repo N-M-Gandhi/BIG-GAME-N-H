@@ -78,11 +78,12 @@ public class Renderer
         {
             double rayAngle = player.r() + 45 - viewIncrement * i; //the angle of this speciic raycast
             CastInfo collisionPoint = RayCast.cast(rayAngle, player, map); //returns collision Vector2D
-            double rayLength = Math.sqrt(Math.pow(collisionPoint.x() - player.x(), 2) + Math.pow(collisionPoint.y() - player.y(), 2)); //the length of a casted ray from player position at rayAngle
+            double rayLength = Math.sqrt(Math.pow(collisionPoint.x() - player.x(), 2) 
+                                        + Math.pow(collisionPoint.y() - player.y(), 2)); //the length of a casted ray from player position at rayAngle
             rayLength = rayLength * Math.cos(Math.toRadians(rayAngle - player.r())); //remove fish eye distortion
             //image size based off of distance formula
             //x/360 = (wall height)/((2 pi) * distance)
-            double screenRatio = 3.80/(2 * (Math.PI) * rayLength); //makes walls 3 meters high
+            double screenRatio = (3.80/1)/(2 * (Math.PI) * rayLength); //makes walls 3 meters high
             int screenScaledRayLength = (int)(height * screenRatio); //calculate length of slice
             int sliceLength = 0;
             if(screenScaledRayLength >= height){sliceLength = height -1;}//if greater than screen, slice length set to maximum

@@ -33,7 +33,7 @@ public class RayCast
         {
             firstXMult = -1; secondXMult = 1; thirdXMult = 1;
             firstYMult = -1; secondYMult = -1; thirdYMult = -1;
-            //extraXCellCheck = 0;
+            extraXCellCheck = 0;
             extraYCellCheck = -1; //bring down horizontal hits down one
         }
         else if(rayAngle > 90 && rayAngle <= 180) //2nd quadrant
@@ -48,14 +48,14 @@ public class RayCast
             firstXMult = 1; secondXMult = -1; thirdXMult = 1;
             firstYMult = 1; secondYMult = -1; thirdYMult = 1;
             extraXCellCheck = -1; //bringe left verticle hits right one
-            //extraYCellCheck = 0;
+            extraYCellCheck = 0;
         }
         else if(rayAngle > 270) //4th quadrant
         {
             firstXMult = -1; secondXMult = 1; thirdXMult = 1;
             firstYMult = -1; secondYMult = 1; thirdYMult = 1;
-            //extraXCellCheck = 0;
-            //extraYCellCheck = 0;
+            extraXCellCheck = 0;
+            extraYCellCheck = 0;
         }
         //if(rayAngle > 180 && rayAngle < 270){stepDirection = -1;}
         CastInfo[] intersections = new CastInfo[2]; //set up the store of vertical and horizontal collisions
@@ -66,10 +66,10 @@ public class RayCast
         //find innitial vertical line intersection point
         double HoriDistFromFirstVertLine = player.x() - ((int)player.x());//horizontal distance from first vertical line
         double intersectHeight = firstXMult * slope * HoriDistFromFirstVertLine; //acts as an offset from the cell
-        intersectHeight = 0;
+        //intersectHeight = 0;
         //the player is currently in vertically
         //this one will hit a vertivcl line eventually
-        for(double x = 0; x < 64; x+=1)
+        for(int x = 0; x < 64; x+=1)
         {
             double y = firstXMult * (slope * x) + intersectHeight;
             double realX = secondXMult * x + (int)player.x();
@@ -86,15 +86,17 @@ public class RayCast
                 break;
             }
         }
+        //intersections[0].setInfo(new Vector2D(HoriDistFromFirstVertLine + player.x(), intersectHeight + player.y()), 1, true);
 
         //horizontal line collision
         //find the innitial horizontal line intersect point
-        double VertDistFromFirstHoriLine = player.y() - ((int)player.y());//vertical distance from first vertical line
+        double VertDistFromFirstHoriLine = player.y() - (int)player.y();//vertical distance from first vertical line
         double intersectBreadth = firstYMult * VertDistFromFirstHoriLine / slope; //acts as an offset from the cell
-        intersectBreadth = 0;
+        System.out.println(HoriDistFromFirstVertLine + ", " + VertDistFromFirstHoriLine);
+        //intersectBreadth = 0;
         //the player is currently in horizontally
         //this one will hit a horizontal line eventually
-        for(double y = 0; y < 64; y+=1)
+        for(int y = 0; y < 64; y+=1)
         {
             double x = firstYMult * y / slope + intersectBreadth;
             double realX = secondYMult * x + player.x();
@@ -111,11 +113,14 @@ public class RayCast
                 break;
             }
         }
+        //intersections[1].setInfo(new Vector2D(intersectBreadth + player.x(), VertDistFromFirstHoriLine + player.y()), 1, false);
 
         //calculate which intersection point is closest using distance formula
-        double verticalLineAlgorithmDistance = Math.sqrt(Math.pow(intersections[0].x(), 2) + Math.pow(intersections[0].y(), 2));
-        double horizontalLineAlgorithmDistance = Math.sqrt(Math.pow(intersections[1].x(), 2) + Math.pow(intersections[1].y(), 2));
-        if(verticalLineAlgorithmDistance < horizontalLineAlgorithmDistance)
+        double verticalLineAlgorithmDistance = Math.sqrt(Math.pow(intersections[0].x() - player.x(), 2) 
+                                                + Math.pow(intersections[0].y() - player.y(), 2));
+        double horizontalLineAlgorithmDistance = Math.sqrt(Math.pow(intersections[1].x() - player.x(), 2) 
+                                                + Math.pow(intersections[1].y() - player.y(), 2));
+        if(verticalLineAlgorithmDistance <= horizontalLineAlgorithmDistance)
         {
             return intersections[0];
         }
