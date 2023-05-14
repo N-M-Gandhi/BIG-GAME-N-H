@@ -13,6 +13,7 @@ public class Renderer
     private int slices;
     private int scale;
     private int height;
+    private double wallHeight;
     //private InputListener input;
 
     private static final Color BACKGROUND = Color.BLACK;
@@ -24,6 +25,7 @@ public class Renderer
         slices = 320;
         scale = 2;
         height = 320;
+        wallHeight = 3.80;
 
         //Schedule a job for the event-dispatching thread:
         //creating and showing this application's GUI.
@@ -83,7 +85,7 @@ public class Renderer
             rayLength = rayLength * Math.cos(Math.toRadians(rayAngle - player.r())); //remove fish eye distortion
             //image size based off of distance formula
             //x/360 = (wall height)/((2 pi) * distance)
-            double screenRatio = (3.80/1)/(2 * (Math.PI) * rayLength); //makes walls 3 meters high
+            double screenRatio = wallHeight/(2 * (Math.PI) * rayLength); //makes walls 3 meters high
             int screenScaledRayLength = (int)(height * screenRatio); //calculate length of slice
             int sliceLength = 0;
             if(screenScaledRayLength >= height){sliceLength = height -1;}//if greater than screen, slice length set to maximum

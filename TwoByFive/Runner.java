@@ -21,11 +21,11 @@ public class Runner implements InputListener
         renderer = new Renderer(input);
         renderer.setTitle("Default TwoByFive Project Name");
         //walls
-        Wall wall1 = new Wall(10, true, 3, 6, map.getMap());
-        Wall wall2 = new Wall(20, true, 12, 10, map.getMap());
-        Wall wall3 = new Wall(10, false, 4, 17, map.getMap());
-        Wall wall4 = new Wall(10, true, 3, 5, map.getMap());
-        Wall wall5 = new Wall(10, true, 3, 4, map.getMap());
+        // Wall wall1 = new Wall(10, true, 3, 6, map.getMap());
+        // Wall wall2 = new Wall(20, true, 12, 10, map.getMap());
+        // Wall wall3 = new Wall(10, false, 4, 17, map.getMap());
+        // Wall wall4 = new Wall(10, true, 3, 5, map.getMap());
+        // Wall wall5 = new Wall(10, true, 3, 4, map.getMap());
         
         //outside walls
         Wall wall8 = new Wall(map.getMap().length, true, 0, 0, map.getMap());
@@ -133,7 +133,7 @@ public class Runner implements InputListener
         // System.out.println((int)(distX) * -1);
         // System.out.println((int)(distY) * -1);
         
-        player.moveY(-0.01, map.getMap());
+        player.moveY(-0.05, map.getMap());
     }
 
     public void sPressed()
@@ -147,21 +147,21 @@ public class Runner implements InputListener
         // System.out.println((int)(distX) * 1);
         // System.out.println((int)(distY) * 1);
         
-        player.moveY(0.01, map.getMap());
+        player.moveY(0.05, map.getMap());
     }
 
     public void aPressed()
     {
         // player.transR(6, map.getMap());
         
-        player.moveX(-0.01, map.getMap());
+        player.moveX(-0.05, map.getMap());
     }
 
     public void dPressed()
     {
         // player.transR(-6, map.getMap());
         
-        player.moveX(0.01, map.getMap());
+        player.moveX(0.05, map.getMap());
     }
 
     public void qPressed()
