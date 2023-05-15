@@ -23,7 +23,7 @@ public class Renderer
     public Renderer(InputActivator input)
     {
         slices = 320 * 2;
-        scale = 8 / 2;
+        scale = 2;
         height = 200 * 2;
         wallHeight = 3.80;
 
@@ -67,7 +67,7 @@ public class Renderer
         frame.setTitle(title);
     }
 
-    public void render(Player player, String[][] map)
+    public void render(Player player, int[][] map)
     {
         //set up window
         Graphics2D graphics = image.createGraphics();

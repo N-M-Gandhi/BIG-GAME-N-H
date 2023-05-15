@@ -7,7 +7,7 @@
  */
 public class RayCast
 {
-    public static CastInfo cast(double rayAngle, Player player, String[][] map)
+    public static CastInfo cast(double rayAngle, Player player, int[][] map)
     {
         if(rayAngle < 0)
         {
@@ -83,7 +83,7 @@ public class RayCast
                 //just do nothing so I don't get an out of bonds error
                 break;
             }
-            else if(map[(int)realY][(int)realX].equals("1") || map[(int)realY][(int)realX + extraXCellCheck].equals("1"))
+            else if(map[(int)realY][(int)realX] > 1 || map[(int)realY][(int)realX + extraXCellCheck] > 1)
             {
                 //record wall intersection value and break
                 intersections[0].setInfo(new Vector2D(realX, realY), 1, true);
@@ -109,7 +109,7 @@ public class RayCast
                 //just do nothing so I don't get an out of bonds error
                 break;
             }
-            else if(map[(int)realY][(int)realX].equals("1") || map[(int)realY + extraYCellCheck][(int)realX].equals("1"))
+            else if(map[(int)realY][(int)realX] > 1 || map[(int)realY + extraYCellCheck][(int)realX] > 1)
             {
                 //record wall intersection value and break
                 intersections[1].setInfo(new Vector2D(realX, realY), 1, false);
@@ -132,7 +132,7 @@ public class RayCast
         }
     }
 
-    public static CastInfo castClose(double rayAngle, Player player, String[][] map)
+    public static CastInfo castClose(double rayAngle, Player player, int[][] map)
     {
         if(rayAngle < 0)
         {
@@ -343,7 +343,7 @@ public class RayCast
         }
     }
 
-    public static CastInfo castLodev(double rayAngle, Player player, String[][] map) {
+    public static CastInfo castLodev(double rayAngle, Player player, int[][] map) {
         if (rayAngle < 0) {
             rayAngle = rayAngle + 360;
         }
@@ -393,7 +393,7 @@ public class RayCast
                 mapY += stepY;
                 side = 1;
             }
-            if (map[mapY][mapX].equals("1") || map[mapY][mapX + xCellOff].equals("1") || map[mapY + yCellOff][mapX].equals("1")) {
+            if (map[mapY][mapX] > 0 || map[mapY][mapX + xCellOff] > 0 || map[mapY + yCellOff][mapX] > 0) {
                 hit = 1;
             }
         }

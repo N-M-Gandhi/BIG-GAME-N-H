@@ -82,7 +82,7 @@ public class MapRenderer
                 graphics.setColor(new Color(0,0,0));
                 graphics.fillRect(x*scale + 1, y*scale + 1, 1*(scale-1), 1*(scale-1));
                 graphics.dispose();
-                if(map.getMap()[y][x].equals("1"))
+                if(map.getMap()[y][x] > 0)
                 {
                     graphics = image.createGraphics();
                     graphics.setColor(new Color(0,0,255));

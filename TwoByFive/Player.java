@@ -35,20 +35,20 @@ public class Player
         //sets x position
         xPos = x;
     }
-    public void moveX(double dist, String map[][])
+    public void moveX(double dist, int map[][])
     {
-        map[(int)this.y()][(int)this.x()] = " . ";
+        map[(int)this.y()][(int)this.x()] = 0;
         if(!(xPos + 1 > map.length - 1) && !(xPos + 1 < 0) && 
-        !(map[(int)this.y()][(int)this.x() + 1].equals("1")))
+        !(map[(int)this.y()][(int)this.x() + 1] > 0))
         {
             if(dist > 0){xPos = xPos + dist;}
         }
         if(!(xPos - 1 > map.length - 1) && !(xPos - 1 < 0) && 
-        !(map[(int)this.y()][(int)this.x() - 1].equals("1")))
+        !(map[(int)this.y()][(int)this.x() - 1] > 0))
         {
             if(dist < 0){xPos = xPos + dist;}
         }
-        map[(int)this.y()][(int)this.x()] = " " + playerChar.substring(((int)rot/45), (((int)rot/45)+1)) + " ";
+        //map[(int)this.y()][(int)this.x()] = " " + playerChar.substring(((int)rot/45), (((int)rot/45)+1)) + " ";
     }
     public double y()
     {
@@ -60,20 +60,20 @@ public class Player
         //sets x position
         yPos = y;
     }
-    public void moveY(double dist, String map[][])
+    public void moveY(double dist, int map[][])
     {
-        map[(int)this.y()][(int)this.x()] = " . ";
+        map[(int)this.y()][(int)this.x()] = 0;
         if(!(yPos + 1 > map.length - 1) && !(yPos + 1 < 0) && 
-        !(map[(int)this.y() + 1][(int)this.x()].equals("1")))
+        !(map[(int)this.y() + 1][(int)this.x()] > 0))
         {
             if(dist > 0){yPos = yPos + dist;}
         }
         if(!(yPos - 1 > map.length - 1) && !(yPos - 1 < 0) && 
-        !(map[(int)this.y() - 1][(int)this.x()].equals("1")))
+        !(map[(int)this.y() - 1][(int)this.x()] > 0))
         {
             if(dist < 0){yPos = yPos + dist;}
         }
-        map[(int)this.y()][(int)this.x()] = " " + playerChar.substring(((int)rot/45), (((int)rot/45)+1)) + " ";
+        //map[(int)this.y()][(int)this.x()] = " " + playerChar.substring(((int)rot/45), (((int)rot/45)+1)) + " ";
     }
     public double r()
     {
@@ -85,7 +85,7 @@ public class Player
         //sets x position
         rot = r;
     }
-    public void transR(double rotation, String[][] map)
+    public void transR(double rotation, int[][] map)
     {
         rot = rot + rotation;
         if(rot < 0)
@@ -96,6 +96,6 @@ public class Player
         {
             rot = rot - 360;
         }
-        map[(int)this.y()][(int)this.x()] = " " + playerChar.substring(((int)rot/45), (((int)rot/45)+1)) + " ";
+        //map[(int)this.y()][(int)this.x()] = " " + playerChar.substring(((int)rot/45), (((int)rot/45)+1)) + " ";
     }
 }

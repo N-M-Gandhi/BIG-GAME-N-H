@@ -7,19 +7,19 @@
 public class Map
 {
     private int size;
-    private String[][] map;
+    private int[][] map;
     Player player;
     
     public Map(InputActivator input)
     {
         //make empty map
         size = 25;
-        map = new String[size][size];
+        map = new int[size][size];
         for(int y = 0; y < size; y++)
         {
             for(int x = 0; x < size; x++)
             {
-                map[y][x] = " . ";
+                map[y][x] = 0;
             }
         }
     }
@@ -27,18 +27,14 @@ public class Map
     {
         //make empty map
         size = s;
-        map = new String[size][size];
+        map = new int[size][size];
         for(int y = 0; y < size; y++)
         {
             for(int x = 0; x < size; x++)
             {
-                map[y][x] = " . ";
+                map[y][x] = 0;
             }
         }
-        
-        //add player
-        player = p;
-        map[(int)player.y()][(int)player.x()] = " @ ";
     }
     public void print()
     {
@@ -53,15 +49,15 @@ public class Map
         }
         System.out.println(output);
     }
-    public String[][] getMap()
+    public int[][] getMap()
     {
         return map;
     }
-    public void setMap(String[][] newMap)
+    public void setMap(int[][] newMap)
     {
         map = newMap;
     }
-    public void setMap(int x, int y, String info)
+    public void setMap(int x, int y, int info)
     {
         map[y][x] = info;
     }

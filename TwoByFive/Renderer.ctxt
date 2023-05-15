@@ -10,5 +10,5 @@ comment3.target=void\ createAndShowGUI(InputActivator)
 comment4.params=title
 comment4.target=void\ setTitle(java.lang.String)
 comment5.params=player\ map
-comment5.target=void\ render(Player,\ java.lang.String[][])
+comment5.target=void\ render(Player,\ int[][])
 numComments=6

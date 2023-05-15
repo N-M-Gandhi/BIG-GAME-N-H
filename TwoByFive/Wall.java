@@ -18,7 +18,7 @@ public class Wall
         xPos = 0;
         yPos = 0;
     }
-    public Wall(int l, boolean h, int x, int y, String[][] map)
+    public Wall(int l, boolean h, int x, int y, int[][] map)
     {
         //set up variables
         length = l;
@@ -37,14 +37,14 @@ public class Wall
         {
             for(int i = xPos; i < xPos + length; i++)
             {
-                map[yPos][i] = "1";
+                map[yPos][i] = 1;
             }
         }
         if(!horizontal)
         {
             for(int i = yPos; i < yPos + length; i++)
             {
-                map[i][xPos] = "1";
+                map[i][xPos] = 1;
             }
         }
     }

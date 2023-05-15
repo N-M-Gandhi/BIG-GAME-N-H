@@ -4,5 +4,5 @@ comment0.text=\r\n\ Write\ a\ description\ of\ class\ Wall\ here.\r\n\r\n\ @auth
 comment1.params=
 comment1.target=Wall()
 comment2.params=l\ h\ x\ y\ map
-comment2.target=Wall(int,\ boolean,\ int,\ int,\ java.lang.String[][])
+comment2.target=Wall(int,\ boolean,\ int,\ int,\ int[][])
 numComments=3

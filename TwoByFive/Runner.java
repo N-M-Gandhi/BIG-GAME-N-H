@@ -79,7 +79,7 @@ public class Runner implements InputListener
         }
     }
 
-    private static void checkMove(String input, Player player , String[][] map)
+    private static void checkMove(String input, Player player , int[][] map)
     {
         int dirMult = 1;
         double dubRot = (double)(player.r());
@@ -106,7 +106,7 @@ public class Runner implements InputListener
         System.out.println((int)(distY) * dirMult);
     }
 
-    private static void checkRotate(String input, Player player , String[][] map)
+    private static void checkRotate(String input, Player player , int[][] map)
     {
         if(input.equals("a"))
         {
