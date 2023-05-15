@@ -22,9 +22,9 @@ public class Renderer
 
     public Renderer(InputActivator input)
     {
-        slices = 320;
-        scale = 2;
-        height = 320;
+        slices = 320 * 2;
+        scale = 8 / 2;
+        height = 200 * 2;
         wallHeight = 3.80;
 
         //Schedule a job for the event-dispatching thread:
@@ -74,12 +74,11 @@ public class Renderer
         graphics.setColor(BACKGROUND);
         graphics.fillRect(0, 0, image.getWidth(), image.getHeight());
         graphics.dispose();
-        double verticalRayHits = 0;
         double viewIncrement = (double)90/(double)(slices-1); //how many degrees is ech slice from each other
         for(int i = 0; i < slices; i++)
         {
             double rayAngle = player.r() + 45 - viewIncrement * i; //the angle of this speciic raycast
-            CastInfo collisionPoint = RayCast.cast(rayAngle, player, map); //returns collision Vector2D
+            CastInfo collisionPoint = RayCast.castLodev(rayAngle, player, map); //returns collision Vector2D
             double rayLength = Math.sqrt(Math.pow(collisionPoint.x() - player.x(), 2) 
                                         + Math.pow(collisionPoint.y() - player.y(), 2)); //the length of a casted ray from player position at rayAngle
             rayLength = rayLength * Math.cos(Math.toRadians(rayAngle - player.r())); //remove fish eye distortion
@@ -92,11 +91,6 @@ public class Renderer
             if(screenScaledRayLength < height && (int)screenScaledRayLength >= 0)
             {sliceLength = (int)(screenScaledRayLength);}// set slicelength if within screen
 
-            if(collisionPoint.getShade())
-            {
-                verticalRayHits++;
-            }
-
             //fill slice with blank space so I dont get permanenet screen tarring
             for(int y = 0; y < height; y++)
             {
@@ -104,7 +98,7 @@ public class Renderer
                 if(y < height/2)
                 {
                     graphics = image.createGraphics();
-                    graphics.setColor(BACKGROUND);
+                    graphics.setColor(new Color(56, 56, 56));
                     graphics.fillRect(i*scale, y*scale, 1*scale, 1*scale);
                     graphics.dispose();
                 }
@@ -124,13 +118,12 @@ public class Renderer
                 graphics.setColor(new Color(0,0,255));
                 if(collisionPoint.getShade())
                 {
-                    graphics.setColor(new Color(0,0,125));//shade darker
+                    graphics.setColor(new Color(0,0,200));//shade darker
                 }
                 graphics.fillRect(i*scale, y*scale, 1*scale, 1*scale);
                 graphics.dispose();
             }
         }   
-        System.out.println((int)((verticalRayHits/slices) * 1000)/10 + "%");
         frame.repaint();
     }
 }

@@ -100,36 +100,35 @@ public class MapRenderer
 
         //render rayCasts
         graphics = image.createGraphics();
-        
-        
+
 
         int feildOfVeiw = 90;
-        int slices = 30;
+        int slices = 90;
 
         double viewIncrement = (double)feildOfVeiw/(double)(slices-1);
         for(int i = 0; i < slices; i++)
         {
             double rayAngle = player.r() + 45 - viewIncrement * i; //the angle of this speciic raycast
             double slope = Math.tan(Math.toRadians(rayAngle));//calculate slope of rayCast
-            CastInfo collisionPoint = RayCast.cast(rayAngle, player, map.getMap()); //returns collision Vector2D
+            CastInfo collisionPoint = RayCast.castLodev(rayAngle, player, map.getMap()); //returns collision Vector2D
             double raycastDist = Math.sqrt(Math.pow(collisionPoint.x() - player.x(), 2) 
-                                            + Math.pow(collisionPoint.y() - player.y(), 2));
-            // CastInfo innitIntersect = RayCast.cast2(rayAngle, player, map.getMap()); //returns collision Vector2D
-            // double innitDist = Math.sqrt(Math.pow(innitIntersect.x() - player.x(), 2) 
-                                            // + Math.pow(innitIntersect.y() - player.y(), 2));
+                    + Math.pow(collisionPoint.y() - player.y(), 2));
+            CastInfo innitIntersect = RayCast.castClose(rayAngle, player, map.getMap()); //returns collision Vector2D
+            double innitDist = Math.sqrt(Math.pow(innitIntersect.x() - player.x(), 2) 
+            + Math.pow(innitIntersect.y() - player.y(), 2));
             //System.out.println(raycastDist);
-            
+
             //draw line
             graphics.setColor(new Color(0,255,0));
             graphics.drawLine((int)(player.x() * scale), (int)(player.y() * scale), 
-                            (int)(collisionPoint.x() * scale), (int)(collisionPoint.y() * scale));
+                (int)(collisionPoint.x() * scale), (int)(collisionPoint.y() * scale));
             //draw line to innitial intersect
-            // graphics.setColor(new Color(0,0,255));
-            // graphics.drawLine((int)(player.x() * scale), (int)(player.y() * scale), 
-                            // (int)(innitIntersect.x() * scale), (int)(innitIntersect.y() * scale));
+            graphics.setColor(new Color(0,0,255));
+            graphics.drawLine((int)(player.x() * scale), (int)(player.y() * scale), 
+            (int)(innitIntersect.x() * scale), (int)(innitIntersect.y() * scale));
         }
         graphics.dispose();
-        
+
         frame.repaint();
     }
 }
