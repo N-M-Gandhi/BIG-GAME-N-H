@@ -76,7 +76,6 @@ public class Renderer
         Graphics2D graphics = image.createGraphics();
         graphics.setColor(BACKGROUND);
         graphics.fillRect(0, 0, image.getWidth(), image.getHeight());
-        graphics.dispose();
         double viewIncrement = (double)90/(double)(slices-1); //how many degrees is ech slice from each other
         for(int i = 0; i < slices; i++)
         {
@@ -100,38 +99,43 @@ public class Renderer
                 //fill in ceiling
                 if(y < height/2)
                 {
-                    graphics = image.createGraphics();
                     graphics.setColor(new Color(56, 56, 56));
                     graphics.fillRect(i*scale, y*scale, 1*scale, 1*scale);
-                    graphics.dispose();
                 }
                 else
                 {
                     //fill in floor
-                    graphics = image.createGraphics();
                     graphics.setColor(new Color(128,128,128));
                     graphics.fillRect(i*scale, y*scale, 1*scale, 1*scale);
-                    graphics.dispose();
                 }
             }
             //fill a slice to said length with at desired length
             double imageHeight = imageReader.getHeight();
             double imageWidth = imageReader.getLength(); System.out.println(imageWidth);
             int wallType = collisionPoint.getWall();
+            double pixelScaler = 0;
+            if(!collisionPoint.getShade())
+            {
+                pixelScaler = collisionPoint.x() - (int)collisionPoint.x();
+            }
+            else
+            {
+                pixelScaler = collisionPoint.y() - (int)collisionPoint.y();
+            }
+            System.out.println(pixelScaler);
+            int imageX = (int)(imageWidth * pixelScaler); System.out.println(imageX);
             for(int y = height/2 - sliceLength/2; y <  height/2 + sliceLength/2; y++)
             {
-                graphics = image.createGraphics();
-                int imageX = (int)(imageWidth/(double)(i + 1)); System.out.println(imageX);
-                int imageY = (int)(rayLength/(double)(i + 1));
+                int imageY = (int)(imageHeight/rayLength); System.out.println("y " + imageY);
                 graphics.setColor(imageReader.getColor(imageX, imageY, wallType));
                 if(collisionPoint.getShade())
                 {
                     graphics.setColor(new Color(0,0,200));//shade darker
                 }
                 graphics.fillRect(i*scale, y*scale, 1*scale, 1*scale);
-                graphics.dispose();
             }
         }   
+        graphics.dispose();
         frame.repaint();
     }
 }
