@@ -37,6 +37,10 @@ public class Runner implements InputListener
         //mapRenderer.setTitle("TwoByFive Map Renderer");
         //map.print();
         //renderer.render(player, map.getMap());
+        
+        //cache images
+        ImageReader imageReader = new ImageReader();
+        imageReader.cacheImages();
     }
 
     public static void main(String[] args)

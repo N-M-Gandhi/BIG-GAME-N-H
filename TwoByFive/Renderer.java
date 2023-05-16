@@ -14,6 +14,7 @@ public class Renderer
     private int scale;
     private int height;
     private double wallHeight;
+    private ImageReader imageReader;
     //private InputListener input;
 
     private static final Color BACKGROUND = Color.BLACK;
@@ -22,10 +23,12 @@ public class Renderer
 
     public Renderer(InputActivator input)
     {
-        slices = 320 * 2;
-        scale = 2;
-        height = 200 * 2;
+        slices = 320;
+        scale = 4;
+        height = 200;
         wallHeight = 3.80;
+        imageReader = new ImageReader();
+        imageReader.cacheImages();
 
         //Schedule a job for the event-dispatching thread:
         //creating and showing this application's GUI.
@@ -112,10 +115,15 @@ public class Renderer
                 }
             }
             //fill a slice to said length with at desired length
+            double imageHeight = imageReader.getHeight();
+            double imageWidth = imageReader.getLength(); System.out.println(imageWidth);
+            int wallType = collisionPoint.getWall();
             for(int y = height/2 - sliceLength/2; y <  height/2 + sliceLength/2; y++)
             {
                 graphics = image.createGraphics();
-                graphics.setColor(new Color(0,0,255));
+                int imageX = (int)(imageWidth/(double)(i + 1)); System.out.println(imageX);
+                int imageY = (int)(rayLength/(double)(i + 1));
+                graphics.setColor(imageReader.getColor(imageX, imageY, wallType));
                 if(collisionPoint.getShade())
                 {
                     graphics.setColor(new Color(0,0,200));//shade darker
