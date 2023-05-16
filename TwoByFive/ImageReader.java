@@ -15,6 +15,7 @@ public class ImageReader
     ImagePPM image3;
     ImagePPM image4;
     ImagePPM image5;
+    ImagePPM image7;
     public ImageReader()
     {
         length = 64;
@@ -26,6 +27,7 @@ public class ImageReader
         switch(number)
         {
             case 1: return image1.getColor(x, y);
+            case 7: return image7.getColor(x, y);
         }
         return new Color(255, 192, 203);//if nothing mathces
     }
@@ -33,6 +35,8 @@ public class ImageReader
     {
         image1 = new ImagePPM();
         image1.ReadPPM("Multibrick.ppm");
+        image7 = new ImagePPM();
+        image7.ReadPPM("better pistol.ppm");
     }
     public int getLength()
     {
