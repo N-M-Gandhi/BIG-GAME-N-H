@@ -7,7 +7,7 @@ public class ImagePPM{
     public int depth,width,height;
 
     public ImagePPM(){
-        pixels = new int[3][1500][1500];
+        pixels = new int[3][128][128];
         depth = width = height = 0;}
 
     public ImagePPM(int inDepth, int inWidth, int inHeight){
@@ -15,10 +15,12 @@ public class ImagePPM{
         width = inWidth;
         height = inHeight;
         depth = inDepth;}
+
     public int[][][] getPixels()
     {
         return pixels;
     }
+
     public Color getColor(int x, int y)
     {
         return new Color(pixels[0][x][y], pixels[1][x][y], pixels[2][x][y]);
@@ -61,9 +63,18 @@ public class ImagePPM{
 
             // read pixels now
             for (int y = 0; y < height; y++)
+            {
                 for (int x = 0; x < width; x++)
+                {
+                    //System.out.print(" (");
                     for (int i = 0; i < 3; i++)
-                        pixels[i][x][y] = in2.readUnsignedByte();
+                    {
+                        pixels[i][x][y] = in2.readUnsignedByte(); System.out.println(" " + pixels[i][x][y]);
+                    }
+                    //System.out.print(")");
+                }
+                //System.out.println();
+            }
 
             in.close();
             in2.close();

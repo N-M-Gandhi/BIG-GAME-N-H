@@ -37,7 +37,7 @@ public class Runner implements InputListener
         //mapRenderer.setTitle("TwoByFive Map Renderer");
         //map.print();
         //renderer.render(player, map.getMap());
-        
+
         //cache images
         ImageReader imageReader = new ImageReader();
         imageReader.cacheImages();
@@ -47,28 +47,6 @@ public class Runner implements InputListener
     {
         Runner runner = new Runner();
         runner.Play();
-        //Scanner scan = new Scanner(System.in);
-        //System.out.println("Name: ");
-        //String name = myObj.nextLine();
-        //System.out.println(name);
-
-        boolean dead = false;
-
-        //Renderer renderer = new Renderer();
-        //renderer.render(player, map.getMap());
-
-        while(!dead)
-        {
-            //System.out.println("before loop");
-            //System.out.println("w, a, s, d");
-            //String input = scan.nextLine();
-            //checkMove(input, player, map.getMap());
-            //checkRotate(input, player, map.getMap());
-            //map.print();
-            //renderer.render(player, map.getMap());
-            //System.out.println(player.r());
-            //System.out.println("after loop");
-        }
     }
 
     public void Play()
@@ -77,52 +55,7 @@ public class Runner implements InputListener
         while(!dead)
         {
             try { Thread.sleep(1000/30); } catch(Exception e) {}
-            //map.print();
-            //mapRenderer.render();
             renderer.render(player, map.getMap());
-        }
-    }
-
-    private static void checkMove(String input, Player player , int[][] map)
-    {
-        int dirMult = 1;
-        double dubRot = (double)(player.r());
-        if(input.equals("w"))
-        {
-            dirMult = 1;
-        }
-        else if(input.equals("s"))
-        {
-            dirMult = -1;
-        }
-        else
-        {
-            return;
-        }
-
-        double distX = (Math.cos(Math.toRadians(player.r()))) * 2;
-        double distY = (Math.sin(Math.toRadians(player.r()))) * -2;
-
-        player.moveX((int)(distX) * dirMult, map);
-        player.moveY((int)(distY) * dirMult, map);
-
-        System.out.println((int)(distX) * dirMult);
-        System.out.println((int)(distY) * dirMult);
-    }
-
-    private static void checkRotate(String input, Player player , int[][] map)
-    {
-        if(input.equals("a"))
-        {
-            player.transR(45, map);
-        }
-        else if(input.equals("d"))
-        {
-            player.transR(-45, map);
-        }
-        else
-        {
-            return;
         }
     }
 
@@ -133,8 +66,6 @@ public class Runner implements InputListener
 
         player.moveX(distX * 0.25, map.getMap());
         player.moveY(distY * -0.25, map.getMap());
-
-        //player.moveY(-0.25, map.getMap());
     }
 
     public void sPressed()
@@ -144,30 +75,24 @@ public class Runner implements InputListener
 
         player.moveX(distX * -0.25, map.getMap());
         player.moveY(distY * 0.25, map.getMap());
-
-        //player.moveY(0.25, map.getMap());
     }
 
     public void aPressed()
     {
         double distX = (Math.sin(Math.toRadians(player.r())));
         double distY = (Math.cos(Math.toRadians(player.r())));
-        
+
         player.moveX(distX * -0.25, map.getMap());
         player.moveY(distY * -0.25, map.getMap());
-
-        //player.moveX(-0.25, map.getMap());
     }
 
     public void dPressed()
     {
         double distX = (Math.sin(Math.toRadians(player.r())));
         double distY = (Math.cos(Math.toRadians(player.r())));
-        
+
         player.moveX(distX * 0.25, map.getMap());
         player.moveY(distY * 0.25, map.getMap());
-
-        //player.moveX(0.25, map.getMap());
     }
 
     public void qPressed()

@@ -24,7 +24,7 @@ public class Renderer
     public Renderer(InputActivator input)
     {
         slices = 320;
-        scale = 4;
+        scale = 6;
         height = 200;
         wallHeight = 3.80;
         imageReader = new ImageReader();
@@ -76,6 +76,7 @@ public class Renderer
         Graphics2D graphics = image.createGraphics();
         graphics.setColor(BACKGROUND);
         graphics.fillRect(0, 0, image.getWidth(), image.getHeight());
+        //render 3D stuff
         double viewIncrement = (double)90/(double)(slices-1); //how many degrees is ech slice from each other
         for(int i = 0; i < slices; i++)
         {
@@ -110,9 +111,9 @@ public class Renderer
                 }
             }
             //fill a slice to said length with at desired length
-            double imageHeight = imageReader.getHeight();
-            double imageWidth = imageReader.getLength(); System.out.println(imageWidth);
             int wallType = collisionPoint.getWall();
+            double imageHeight = imageReader.getHeight(wallType);
+            double imageWidth = imageReader.getWidth(wallType);
             double pixelScaler = 0;
             if(!collisionPoint.getShade())
             {
@@ -122,19 +123,38 @@ public class Renderer
             {
                 pixelScaler = collisionPoint.y() - (int)collisionPoint.y();
             }
-            System.out.println(pixelScaler);
-            int imageX = (int)(imageWidth * pixelScaler); System.out.println(imageX);
+            //System.out.println(pixelScaler);
+            int imageX = (int)(imageWidth * pixelScaler); //System.out.println(imageX);
             for(int y = height/2 - sliceLength/2; y <  height/2 + sliceLength/2; y++)
             {
-                int imageY = (int)(imageHeight/rayLength); System.out.println("y " + imageY);
-                graphics.setColor(imageReader.getColor(imageX, imageY, wallType));
+                double sliceScaler = (double)(y - height/2 + sliceLength/2)/sliceLength; //System.out.println("scaler " + (y - height/2 + sliceLength/2) + "/" + sliceLength + "=" + sliceScaler);
+                int imageY = (int)(imageHeight * sliceScaler); //System.out.println("y " + imageY);
+                Color color = imageReader.getColor(imageX, imageY, wallType);
                 if(collisionPoint.getShade())
                 {
-                    graphics.setColor(new Color(0,0,200));//shade darker
+                    graphics.setColor(color.darker());//shade darker
+                }
+                else
+                {
+                    graphics.setColor(color);
                 }
                 graphics.fillRect(i*scale, y*scale, 1*scale, 1*scale);
             }
         }   
+        //render weapon
+        for(int x = 120; x < 200; x++)
+        {
+            for(int y = 120; y < 200; y++)
+            {
+                Color color = imageReader.getColor(x - 120, y - 120, 7);
+                if(!color.equals(new Color(255, 0, 255)))
+                {
+                    graphics.setColor(color);
+                    graphics.fillRect(x*scale, y*scale, 1*scale, 1*scale);
+                }
+            }
+        }
+
         graphics.dispose();
         frame.repaint();
     }

@@ -8,22 +8,19 @@ import java.awt.*;
 
 public class ImageReader
 {
-    int length;
-    int height;
-    ImagePPM image1;
-    ImagePPM image2;
-    ImagePPM image3;
-    ImagePPM image4;
-    ImagePPM image5;
-    ImagePPM image7;
+    ImagePNG image1;
+    ImagePNG image2;
+    ImagePNG image3;
+    ImagePNG image4;
+    ImagePNG image5;
+    ImagePNG image6;
+    ImagePNG image7;
     public ImageReader()
     {
-        length = 64;
-        height = 64;
     }
+
     public Color getColor(int x, int y, int number)
     {
-        String name = "";
         switch(number)
         {
             case 1: return image1.getColor(x, y);
@@ -31,19 +28,30 @@ public class ImageReader
         }
         return new Color(255, 192, 203);//if nothing mathces
     }
+
     public void cacheImages()
     {
-        image1 = new ImagePPM();
-        image1.ReadPPM("Multibrick.ppm");
-        image7 = new ImagePPM();
-        image7.ReadPPM("better pistol.ppm");
+        image1 = new ImagePNG("multibrick.png");
+        image7 = new ImagePNG("pistol_model.png");
     }
-    public int getLength()
+
+    public int getWidth(int number)
     {
-        return length;
+        switch(number)
+        {
+            case 1: return image1.width();
+            case 7: return image7.width();
+        }
+        return 320;
     }
-    public int getHeight()
+
+    public int getHeight(int number)
     {
-        return height;
+        switch(number)
+        {
+            case 1: return image1.height();
+            case 7: return image7.height();
+        }
+        return 200;
     }
 }
