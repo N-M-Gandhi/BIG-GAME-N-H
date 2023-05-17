@@ -24,6 +24,7 @@ public class ImageReader
         switch(number)
         {
             case 1: return image1.getColor(x, y);
+            case 2: return image2.getColor(x, y);
             case 7: return image7.getColor(x, y);
         }
         return new Color(255, 192, 203);//if nothing mathces
@@ -32,6 +33,7 @@ public class ImageReader
     public void cacheImages()
     {
         image1 = new ImagePNG("multibrick.png");
+        image2 = new ImagePNG("nazi_banner.png");
         image7 = new ImagePNG("pistol_model.png");
     }
 
@@ -40,6 +42,7 @@ public class ImageReader
         switch(number)
         {
             case 1: return image1.width();
+            case 2: return image2.width();
             case 7: return image7.width();
         }
         return 320;
@@ -50,6 +53,7 @@ public class ImageReader
         switch(number)
         {
             case 1: return image1.height();
+            case 2: return image2.height();
             case 7: return image7.height();
         }
         return 200;

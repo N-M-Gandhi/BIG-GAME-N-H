@@ -38,6 +38,7 @@ public class Wall
             for(int i = xPos; i < xPos + length; i++)
             {
                 map[yPos][i] = 1;
+                if((int)(Math.random() * 25) == 0){map[yPos][i] = 2;}
             }
         }
         if(!horizontal)
