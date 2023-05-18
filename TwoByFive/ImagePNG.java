@@ -21,6 +21,10 @@ public class ImagePNG
     public int height;
     public int width;
     BufferedImage image;
+    public ImagePNG()
+    {
+        
+    }
     public ImagePNG(String name)
     {
         try{

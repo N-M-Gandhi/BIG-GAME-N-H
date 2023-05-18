@@ -5,57 +5,36 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class ImageReader
 {
-    ImagePNG image1;
-    ImagePNG image2;
-    ImagePNG image3;
-    ImagePNG image4;
-    ImagePNG image5;
-    ImagePNG image6;
-    ImagePNG image7;
+    ArrayList<ImagePNG> imageList;
     public ImageReader()
     {
+        imageList = new ArrayList<ImagePNG>();
     }
 
     public Color getColor(int x, int y, int number)
     {
-        switch(number)
-        {
-            case 1: return image1.getColor(x, y);
-            case 2: return image2.getColor(x, y);
-            case 7: return image7.getColor(x, y);
-        }
-        return new Color(255, 192, 203);//if nothing mathces
+        return imageList.get(number).getColor(x, y);
     }
 
     public void cacheImages()
     {
-        image1 = new ImagePNG("multibrick.png");
-        image2 = new ImagePNG("nazi_banner.png");
-        image7 = new ImagePNG("pistol_model.png");
+        for(int i = 0; i < 128; i++){imageList.add(new ImagePNG());}//fills ArrayList with empt ImagePNG objects to later be set to real images
+        imageList.set(1, new ImagePNG("multibrick.png"));
+        imageList.set(2, new ImagePNG("nazi_banner.png"));
+        imageList.set(7, new ImagePNG("pistol_model.png"));
     }
 
     public int getWidth(int number)
     {
-        switch(number)
-        {
-            case 1: return image1.width();
-            case 2: return image2.width();
-            case 7: return image7.width();
-        }
-        return 320;
+        return imageList.get(number).width();
     }
 
     public int getHeight(int number)
     {
-        switch(number)
-        {
-            case 1: return image1.height();
-            case 2: return image2.height();
-            case 7: return image7.height();
-        }
-        return 200;
+        return imageList.get(number).height();
     }
 }

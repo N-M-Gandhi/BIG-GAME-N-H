@@ -80,6 +80,10 @@ public class Player
         //returns current x position
         return rot;
     }
+    public double getRadians()
+    {
+        return Math.toRadians(rot);
+    }
     public void r(double r)
     {
         //sets x position
@@ -97,5 +101,9 @@ public class Player
             rot = rot - 360;
         }
         //map[(int)this.y()][(int)this.x()] = " " + playerChar.substring(((int)rot/45), (((int)rot/45)+1)) + " ";
+    }
+    public Vector2D getVector2D()
+    {
+        return new Vector2D(xPos, yPos);
     }
 }

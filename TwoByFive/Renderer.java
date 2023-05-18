@@ -2,6 +2,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import javax.swing.*;
+import java.util.ArrayList;
 /**
  * Write a description of class Renderer here.
  *
@@ -15,6 +16,8 @@ public class Renderer
     private int height;
     private double wallHeight;
     private ImageReader imageReader;
+    private ArrayList<Sprite> spriteList;
+    private int FOV;
     //private InputListener input;
 
     private static final Color BACKGROUND = Color.BLACK;
@@ -23,12 +26,15 @@ public class Renderer
 
     public Renderer(InputActivator input)
     {
-        slices = 320;
-        scale = 6;
-        height = 200;
+        slices = 320 * 2;
+        scale = 3;
+        height = 200 * 2;
         wallHeight = 3.80;
+        FOV = 90;
         imageReader = new ImageReader();
         imageReader.cacheImages();
+        spriteList = new ArrayList<Sprite>();
+        spriteList.add(new Sprite(new Vector2D(1, 1), 7));
 
         //Schedule a job for the event-dispatching thread:
         //creating and showing this application's GUI.
@@ -77,13 +83,59 @@ public class Renderer
         graphics.setColor(BACKGROUND);
         graphics.fillRect(0, 0, image.getWidth(), image.getHeight());
         //render 3D stuff
-        double viewIncrement = (double)90/(double)(slices-1); //how many degrees is ech slice from each other
+        renderWalls(player, map, graphics);
+        //render sprites
+        renderSprites(player, map, graphics);
+        //render weapon
+        // renderUI(player, map, graphics);
+
+        graphics.dispose();
+        frame.repaint();
+    }
+
+    private void renderSprites(Player player, int[][] map, Graphics2D graphics)
+    {
+        for(int i = 0; i < spriteList.size(); i++)
+        {
+            Sprite sprite = spriteList.get(i);
+            double angle = Math.toDegrees(sprite.getAngleFrom(player.getVector2D())); //returns angle from player to sprite in degrees
+            double distance = sprite.getDistance(player.getVector2D());
+            if(angle < player.r() + FOV/2 && angle > player.r() - FOV/2)
+            {
+                graphics.setColor(imageReader.getColor(0, 0, sprite.getImageNumber()));
+                graphics.setColor(new Color(255, 0, 255));
+                double xScale = 1 - ((angle - (player.r() - FOV/2)) / FOV);
+                int x = (int) (xScale * slices);
+                graphics.fillRect(x*scale, (height/2)*scale, 1*scale  * 16, 1*scale * 16);
+            }
+        }
+    }
+
+    private void renderUI(Player player, int[][] map, Graphics2D graphics)
+    {
+        for(int x = 120; x < 200; x++)
+        {
+            for(int y = 120; y < 200; y++)
+            {
+                Color color = imageReader.getColor(x - 120, y - 120, 7);
+                if(!color.equals(new Color(255, 0, 255)))
+                {
+                    graphics.setColor(color);
+                    graphics.fillRect(x*scale, y*scale, 1*scale, 1*scale);
+                }
+            }
+        }
+    }
+
+    private void renderWalls(Player player, int[][] map, Graphics2D graphics)
+    {
+        double viewIncrement = (double)FOV/(double)(slices-1); //how many degrees is ech slice from each other
         for(int i = 0; i < slices; i++)
         {
-            double rayAngle = player.r() + 45 - viewIncrement * i; //the angle of this speciic raycast
+            double rayAngle = player.r() + FOV/2 - viewIncrement * i; //the angle of this speciic raycast
             CastInfo collisionPoint = RayCast.castLodev(rayAngle, player, map); //returns collision Vector2D
             double rayLength = Math.sqrt(Math.pow(collisionPoint.x() - player.x(), 2) 
-                                        + Math.pow(collisionPoint.y() - player.y(), 2)); //the length of a casted ray from player position at rayAngle
+                    + Math.pow(collisionPoint.y() - player.y(), 2)); //the length of a casted ray from player position at rayAngle
             rayLength = rayLength * Math.cos(Math.toRadians(rayAngle - player.r())); //remove fish eye distortion
             //image size based off of distance formula
             //x/360 = (wall height)/((2 pi) * distance)
@@ -141,21 +193,5 @@ public class Renderer
                 graphics.fillRect(i*scale, y*scale, 1*scale, 1*scale);
             }
         }   
-        //render weapon
-        for(int x = 120; x < 200; x++)
-        {
-            for(int y = 120; y < 200; y++)
-            {
-                Color color = imageReader.getColor(x - 120, y - 120, 7);
-                if(!color.equals(new Color(255, 0, 255)))
-                {
-                    graphics.setColor(color);
-                    graphics.fillRect(x*scale, y*scale, 1*scale, 1*scale);
-                }
-            }
-        }
-
-        graphics.dispose();
-        frame.repaint();
     }
 }

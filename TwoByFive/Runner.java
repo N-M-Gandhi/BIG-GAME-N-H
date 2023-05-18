@@ -97,10 +97,10 @@ public class Runner implements InputListener
 
     public void qPressed()
     {
-        player.transR(6, map.getMap());
+        player.transR(3, map.getMap());
     }
 
     public void ePressed()
-    {player.transR(-6, map.getMap());
+    {player.transR(-3, map.getMap());
     }
 }

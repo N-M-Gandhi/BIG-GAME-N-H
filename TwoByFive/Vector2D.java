@@ -20,6 +20,11 @@ public class Vector2D
         x = ex;
         y = ey;
     }
+    public Vector2D(Vector2D v)
+    {
+        x = v.x();
+        y = v.y();
+    }
     public double x()
     {
         return x;
@@ -35,6 +40,11 @@ public class Vector2D
     public void y(double ey)
     {
         y = ey;
+    }
+    public void setVector2D(Vector2D v)
+    {
+        x = v.x();
+        y = v.y();
     }
     public void add(Vector2D other)
     {
