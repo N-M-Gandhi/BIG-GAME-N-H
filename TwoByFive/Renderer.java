@@ -26,15 +26,16 @@ public class Renderer
 
     public Renderer(InputActivator input)
     {
-        slices = 320 * 2;
+        slices = 320;
         scale = 3;
-        height = 200 * 2;
+        height = 200;
         wallHeight = 3.80;
         FOV = 90;
         imageReader = new ImageReader();
         imageReader.cacheImages();
         spriteList = new ArrayList<Sprite>();
         spriteList.add(new Sprite(new Vector2D(1, 1), 7));
+        spriteList.add(new Sprite(new Vector2D(12, 20), 7));
 
         //Schedule a job for the event-dispatching thread:
         //creating and showing this application's GUI.
@@ -85,28 +86,49 @@ public class Renderer
         //render 3D stuff
         renderWalls(player, map, graphics);
         //render sprites
-        renderSprites(player, map, graphics);
+        //renderSprites(player, map, graphics);
         //render weapon
-        // renderUI(player, map, graphics);
+        renderUI(player, map, graphics);
 
         graphics.dispose();
         frame.repaint();
     }
 
-    private void renderSprites(Player player, int[][] map, Graphics2D graphics)
+    private void renderSprites(Player player, int[][] map, Graphics2D graphics, double[] rayDistances)
     {
         for(int i = 0; i < spriteList.size(); i++)
         {
             Sprite sprite = spriteList.get(i);
             double angle = Math.toDegrees(sprite.getAngleFrom(player.getVector2D())); //returns angle from player to sprite in degrees
             double distance = sprite.getDistance(player.getVector2D());
-            if(angle < player.r() + FOV/2 && angle > player.r() - FOV/2)
+            double xScale = 1 - ((angle - (player.r() - FOV/2)) / FOV);
+            int xOnScreen = (int) (xScale * slices);
+            if(angle < player.r() + FOV/2 && angle > player.r() - FOV/2 && rayDistances[xOnScreen] > distance)
             {
-                graphics.setColor(imageReader.getColor(0, 0, sprite.getImageNumber()));
-                graphics.setColor(new Color(255, 0, 255));
-                double xScale = 1 - ((angle - (player.r() - FOV/2)) / FOV);
-                int x = (int) (xScale * slices);
-                graphics.fillRect(x*scale, (height/2)*scale, 1*scale  * 16, 1*scale * 16);
+                int imageNumber = sprite.getImageNumber();
+                int imageHeight = imageReader.getHeight(imageNumber); System.out.println(imageHeight);
+                int imageWidth = imageReader.getWidth(imageNumber);
+                int midPoint = imageWidth/2;
+                double doubleHeight = (imageHeight/64)/(2 * (Math.PI) * distance); // 64 pixels = 1 meter 
+                System.out.println(doubleHeight);
+                double doubleWidth = (imageWidth/64)/(2 * (Math.PI) * distance);
+                int intHeight = (int)doubleHeight;
+                int intWidth = (int)doubleWidth;
+                System.out.println(intHeight);
+                for(int y = height/2 - intHeight/2; y <  height/2 + intHeight/2; y++)
+                {
+                    double imageScalerY = (double)(y - height/2 + intHeight/2)/intHeight; //System.out.println("scaler " + (y - height/2 + sliceLength/2) + "/" + sliceLength + "=" + sliceScaler);
+                    int imageY = (int)(imageHeight * imageScalerY); //System.out.println("y " + imageY);
+                    System.out.println("i'm getting here 2");
+                    for(int x = midPoint - imageWidth/2; x < midPoint + imageWidth/2; x++)
+                    {
+                        double imageScalerX = (double)(x - midPoint + intWidth/2)/intWidth;
+                        int imageX = (int)(imageWidth * imageScalerX);
+                        graphics.setColor(imageReader.getColor(imageX, imageY, imageNumber));
+                        graphics.fillRect(x*scale, y*scale, 1*scale, 1*scale);
+                        System.out.println("i'm getting here");
+                    }
+                }
             }
         }
     }
@@ -129,6 +151,7 @@ public class Renderer
 
     private void renderWalls(Player player, int[][] map, Graphics2D graphics)
     {
+        double[] distance = new double[slices];
         double viewIncrement = (double)FOV/(double)(slices-1); //how many degrees is ech slice from each other
         for(int i = 0; i < slices; i++)
         {
@@ -136,6 +159,7 @@ public class Renderer
             CastInfo collisionPoint = RayCast.castLodev(rayAngle, player, map); //returns collision Vector2D
             double rayLength = Math.sqrt(Math.pow(collisionPoint.x() - player.x(), 2) 
                     + Math.pow(collisionPoint.y() - player.y(), 2)); //the length of a casted ray from player position at rayAngle
+            distance[i] = rayLength;//stow this value for comparint to sprite
             rayLength = rayLength * Math.cos(Math.toRadians(rayAngle - player.r())); //remove fish eye distortion
             //image size based off of distance formula
             //x/360 = (wall height)/((2 pi) * distance)
@@ -193,5 +217,6 @@ public class Renderer
                 graphics.fillRect(i*scale, y*scale, 1*scale, 1*scale);
             }
         }   
+        renderSprites(player, map, graphics, distance);
     }
 }
