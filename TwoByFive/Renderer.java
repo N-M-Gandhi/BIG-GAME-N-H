@@ -34,8 +34,8 @@ public class Renderer
         imageReader = new ImageReader();
         imageReader.cacheImages();
         spriteList = new ArrayList<Sprite>();
-        spriteList.add(new Sprite(new Vector2D(1, 1), 7));
-        spriteList.add(new Sprite(new Vector2D(12, 20), 7));
+        spriteList.add(new Sprite(new Vector2D(29, 29), 9));
+        spriteList.add(new Sprite(new Vector2D(12, 19), 8));
 
         //Schedule a job for the event-dispatching thread:
         //creating and showing this application's GUI.
@@ -106,27 +106,29 @@ public class Renderer
             if(angle < player.r() + FOV/2 && angle > player.r() - FOV/2 && rayDistances[xOnScreen] > distance)
             {
                 int imageNumber = sprite.getImageNumber();
-                int imageHeight = imageReader.getHeight(imageNumber); System.out.println(imageHeight);
+                int imageHeight = imageReader.getHeight(imageNumber);
                 int imageWidth = imageReader.getWidth(imageNumber);
                 int midPoint = imageWidth/2;
-                double doubleHeight = (imageHeight/64)/(2 * (Math.PI) * distance); // 64 pixels = 1 meter 
-                System.out.println(doubleHeight);
-                double doubleWidth = (imageWidth/64)/(2 * (Math.PI) * distance);
-                int intHeight = (int)doubleHeight;
-                int intWidth = (int)doubleWidth;
-                System.out.println(intHeight);
+                double doubleHeight = (imageHeight/4)/(2 * (Math.PI) * distance); // 64 pixels = 1 meter 
+                double doubleWidth = (imageWidth/4)/(2 * (Math.PI) * distance);
+                int intHeight = (int)(imageHeight * doubleHeight);
+                int intWidth = (int)(imageWidth * doubleWidth);
+                //System.out.println(intHeight);
+                //System.out.println(intWidth);
                 for(int y = height/2 - intHeight/2; y <  height/2 + intHeight/2; y++)
                 {
-                    double imageScalerY = (double)(y - height/2 + intHeight/2)/intHeight; //System.out.println("scaler " + (y - height/2 + sliceLength/2) + "/" + sliceLength + "=" + sliceScaler);
+                    double imageScalerY = (double)(y - height/2 + intHeight/2)/intHeight; //System.out.println("scalerY " + (y - height/2 + intHeight/2) + "/" + intHeight + "=" + imageScalerY);
                     int imageY = (int)(imageHeight * imageScalerY); //System.out.println("y " + imageY);
-                    System.out.println("i'm getting here 2");
-                    for(int x = midPoint - imageWidth/2; x < midPoint + imageWidth/2; x++)
+                    for(int x = midPoint - intWidth/2; x < midPoint + intWidth/2; x++)
                     {
-                        double imageScalerX = (double)(x - midPoint + intWidth/2)/intWidth;
-                        int imageX = (int)(imageWidth * imageScalerX);
-                        graphics.setColor(imageReader.getColor(imageX, imageY, imageNumber));
-                        graphics.fillRect(x*scale, y*scale, 1*scale, 1*scale);
-                        System.out.println("i'm getting here");
+                        double imageScalerX = (double)(x - midPoint + intWidth/2)/intWidth; //System.out.println("scalerX " + (x - midPoint + intWidth/2) + "/" + intWidth + "=" + imageScalerX);
+                        int imageX = (int)(imageWidth * imageScalerX); //System.out.println("x " + imageX);
+                        Color color = imageReader.getColor(imageX, imageY, imageNumber);
+                        if(!color.equals(new Color(255, 0, 255)))
+                        {
+                            graphics.setColor(color);
+                            graphics.fillRect((xOnScreen + x)*scale, y*scale, 1*scale, 1*scale);
+                        }
                     }
                 }
             }
@@ -163,7 +165,7 @@ public class Renderer
             rayLength = rayLength * Math.cos(Math.toRadians(rayAngle - player.r())); //remove fish eye distortion
             //image size based off of distance formula
             //x/360 = (wall height)/((2 pi) * distance)
-            double screenRatio = wallHeight/(2 * (Math.PI) * rayLength); //makes walls 3 meters high
+            double screenRatio = wallHeight/(2 * (Math.PI) * rayLength); //makes walls 3.8 meters high
             int screenScaledRayLength = (int)(height * screenRatio); //calculate length of slice
             int sliceLength = 0;
             if(screenScaledRayLength >= height){sliceLength = height -1;}//if greater than screen, slice length set to maximum

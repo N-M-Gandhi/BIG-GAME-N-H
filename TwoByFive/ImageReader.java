@@ -26,6 +26,8 @@ public class ImageReader
         imageList.set(1, new ImagePNG("multibrick.png"));
         imageList.set(2, new ImagePNG("nazi_banner.png"));
         imageList.set(7, new ImagePNG("pistol_model.png"));
+        imageList.set(9, new ImagePNG("fortnite_burger.png"));
+        imageList.set(8, new ImagePNG("gunmanstand.png"));
     }
 
     public int getWidth(int number)
