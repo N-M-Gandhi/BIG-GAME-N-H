@@ -35,7 +35,7 @@ public class Renderer
         imageReader.cacheImages();
         spriteList = new ArrayList<Sprite>();
         spriteList.add(new Sprite(new Vector2D(29, 29), 9));
-        spriteList.add(new Sprite(new Vector2D(12, 19), 8));
+        spriteList.add(new Sprite(new Vector2D(12, 19), 9));
 
         //Schedule a job for the event-dispatching thread:
         //creating and showing this application's GUI.
@@ -96,39 +96,36 @@ public class Renderer
 
     private void renderSprites(Player player, int[][] map, Graphics2D graphics, double[] rayDistances)
     {
-        for(int i = 0; i < spriteList.size(); i++)
+        for(int i = 0; i < spriteList.size(); i++) //there is a bug where sprites can be in wrong order, but whatever. Put furniture at end of list.
         {
             Sprite sprite = spriteList.get(i);
             double angle = Math.toDegrees(sprite.getAngleFrom(player.getVector2D())); //returns angle from player to sprite in degrees
             double distance = sprite.getDistance(player.getVector2D());
             double xScale = 1 - ((angle - (player.r() - FOV/2)) / FOV);
             int xOnScreen = (int) (xScale * slices);
-            if(angle < player.r() + FOV/2 && angle > player.r() - FOV/2 && rayDistances[xOnScreen] > distance)
+            int imageNumber = sprite.getImageNumber();
+            int imageHeight = imageReader.getHeight(imageNumber);
+            int imageWidth = imageReader.getWidth(imageNumber);
+            int midPoint = imageWidth/2;
+            double doubleHeight = (imageHeight/4)/(2 * (Math.PI) * distance); // 64 pixels = 1 meter 
+            double doubleWidth = (imageWidth/4)/(2 * (Math.PI) * distance);
+            int intHeight = (int)(imageHeight * doubleHeight);
+            int intWidth = (int)(imageWidth * doubleWidth);
+            //System.out.println(intHeight);
+            //System.out.println(intWidth);
+            for(int y = height/2 - intHeight/2; y <  height/2 + intHeight/2; y++)
             {
-                int imageNumber = sprite.getImageNumber();
-                int imageHeight = imageReader.getHeight(imageNumber);
-                int imageWidth = imageReader.getWidth(imageNumber);
-                int midPoint = imageWidth/2;
-                double doubleHeight = (imageHeight/4)/(2 * (Math.PI) * distance); // 64 pixels = 1 meter 
-                double doubleWidth = (imageWidth/4)/(2 * (Math.PI) * distance);
-                int intHeight = (int)(imageHeight * doubleHeight);
-                int intWidth = (int)(imageWidth * doubleWidth);
-                //System.out.println(intHeight);
-                //System.out.println(intWidth);
-                for(int y = height/2 - intHeight/2; y <  height/2 + intHeight/2; y++)
+                double imageScalerY = (double)(y - height/2 + intHeight/2)/intHeight; //System.out.println("scalerY " + (y - height/2 + intHeight/2) + "/" + intHeight + "=" + imageScalerY);
+                int imageY = (int)(imageHeight * imageScalerY); //System.out.println("y " + imageY);
+                for(int x = midPoint - intWidth/2; x < midPoint + intWidth/2; x++)
                 {
-                    double imageScalerY = (double)(y - height/2 + intHeight/2)/intHeight; //System.out.println("scalerY " + (y - height/2 + intHeight/2) + "/" + intHeight + "=" + imageScalerY);
-                    int imageY = (int)(imageHeight * imageScalerY); //System.out.println("y " + imageY);
-                    for(int x = midPoint - intWidth/2; x < midPoint + intWidth/2; x++)
+                    double imageScalerX = (double)(x - midPoint + intWidth/2)/intWidth; //System.out.println("scalerX " + (x - midPoint + intWidth/2) + "/" + intWidth + "=" + imageScalerX);
+                    int imageX = (int)(imageWidth * imageScalerX); //System.out.println("x " + imageX);
+                    Color color = imageReader.getColor(imageX, imageY, imageNumber);
+                    if(!color.equals(new Color(255, 0, 255)) && (xOnScreen + x) > 0 && (xOnScreen + x) < slices && y > 0 && y < height && rayDistances[xOnScreen + x] > distance)
                     {
-                        double imageScalerX = (double)(x - midPoint + intWidth/2)/intWidth; //System.out.println("scalerX " + (x - midPoint + intWidth/2) + "/" + intWidth + "=" + imageScalerX);
-                        int imageX = (int)(imageWidth * imageScalerX); //System.out.println("x " + imageX);
-                        Color color = imageReader.getColor(imageX, imageY, imageNumber);
-                        if(!color.equals(new Color(255, 0, 255)))
-                        {
-                            graphics.setColor(color);
-                            graphics.fillRect((xOnScreen + x)*scale, y*scale, 1*scale, 1*scale);
-                        }
+                        graphics.setColor(color);
+                        graphics.fillRect((xOnScreen + x)*scale, y*scale, 1*scale, 1*scale);
                     }
                 }
             }
