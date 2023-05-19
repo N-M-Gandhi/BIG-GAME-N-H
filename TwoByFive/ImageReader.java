@@ -28,6 +28,7 @@ public class ImageReader
         imageList.set(7, new ImagePNG("pistol_model.png"));
         imageList.set(9, new ImagePNG("fortnite_burger.png"));
         imageList.set(8, new ImagePNG("gunmanstand.png"));
+        imageList.set(10, new ImagePNG("wolf_gaurd.png"));
     }
 
     public int getWidth(int number)
