@@ -39,11 +39,11 @@ public class Map
         spriteList = new ArrayList<Sprite>();
         spriteList.add(new Sprite(new Vector2D(29, 29), 10));
         //spriteList.add(new Sprite(new Vector2D(12, 19), 9));
-        spriteList.add(new Enemy(new Vector2D(12, 19), 10, 12));
-        spriteList.add(new Enemy(new Vector2D(13, 19), 10, 12));
-        spriteList.add(new Enemy(new Vector2D(14, 19), 10, 12));
-        spriteList.add(new Enemy(new Vector2D(15, 19), 10, 12));
-        spriteList.add(new Enemy(new Vector2D(16, 19), 10, 12));
+        spriteList.add(new Enemy(new Vector2D(12, 19), 10, 15, 12));
+        spriteList.add(new Enemy(new Vector2D(13, 19), 10, 15, 12));
+        spriteList.add(new Enemy(new Vector2D(14, 19), 10, 15, 12));
+        spriteList.add(new Enemy(new Vector2D(15, 19), 10, 15, 12));
+        spriteList.add(new Enemy(new Vector2D(16, 19), 10, 15, 12));
     }
     public void print()
     {
@@ -73,5 +73,17 @@ public class Map
     public ArrayList<Sprite> getSpriteList()
     {
         return spriteList;
+    }
+    public void tick()
+    {
+        for(int i = 0; i < spriteList.size(); i++)
+        {
+            Sprite sprite = spriteList.get(i);
+            if(sprite instanceof Enemy)
+            {
+                Enemy enemy = (Enemy)sprite;
+                enemy.tick();
+            }
+        }
     }
 }

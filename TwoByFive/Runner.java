@@ -60,7 +60,7 @@ public class Runner implements InputListener
             try { Thread.sleep(1000/30); } catch(Exception e) {}
             renderer.render(player, map, weapon);
             weapon.tick();
-            
+            map.tick();
         }
     }
 

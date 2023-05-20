@@ -15,4 +15,6 @@ comment6.params=x\ y\ info
 comment6.target=void\ setMap(int,\ int,\ int)
 comment7.params=
 comment7.target=java.util.ArrayList\ getSpriteList()
-numComments=8
+comment8.params=
+comment8.target=void\ tick()
+numComments=9
