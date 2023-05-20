@@ -20,7 +20,7 @@ public class Enemy extends Sprite
         super();
         deadImageNumber = 1;
         shotImageNumber = 2;
-        HIT_COOLDOWN = 7;
+        HIT_COOLDOWN = 11;
     }
 
     public Enemy(Vector2D v, int number, int shotNumber, int deadNumber)
@@ -29,7 +29,7 @@ public class Enemy extends Sprite
         normImageNumber = number;
         deadImageNumber = deadNumber;
         shotImageNumber = shotNumber;
-        HIT_COOLDOWN = 7;
+        HIT_COOLDOWN = 11;
     }
 
     public void shot()

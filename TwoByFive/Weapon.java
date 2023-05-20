@@ -16,6 +16,9 @@ public class Weapon
     private int SHOOT_COOLDOWN;
     private int shootCooldown;
     private double fireCone;
+    private boolean hasReset;
+    
+    AudioManager audioManager;
 
     /**
      * Constructor for objects of class weapon
@@ -25,9 +28,12 @@ public class Weapon
         imageNumber = 7;
         fireNumber = 11;
         fire = false;
-        FLASH_COOLDOWN = 5;
-        SHOOT_COOLDOWN = 15;
+        FLASH_COOLDOWN = 7;
+        SHOOT_COOLDOWN = 18;
         fireCone = Math.toRadians(20);
+        audioManager = new AudioManager();
+        audioManager.cacheAudio();
+        hasReset = true;
     }
 
     public Weapon(int n, int f)
@@ -35,9 +41,12 @@ public class Weapon
         imageNumber = n;
         fireNumber = f;
         fire = false;
-        FLASH_COOLDOWN = 5;
-        SHOOT_COOLDOWN = 10;
+        FLASH_COOLDOWN = 7;
+        SHOOT_COOLDOWN = 18;
         fireCone = Math.toRadians(20);
+        audioManager = new AudioManager();
+        audioManager.cacheAudio();
+        hasReset = true;
     }
 
     public int getImageNumber()
@@ -58,8 +67,9 @@ public class Weapon
         {
             fire = f;
             flashCooldown = FLASH_COOLDOWN;
-            shootCooldown = SHOOT_COOLDOWN;
+            shootCooldown = SHOOT_COOLDOWN; 
             calcHits(player, map);
+            audioManager.play(2);
         }
     }
 
@@ -87,10 +97,13 @@ public class Weapon
         if(flashCooldown > 0)
         {
             flashCooldown--;
+            hasReset = false;
         }
-        else
+        else if(!hasReset)
         {
+            audioManager.play(3);
             fire = false;
+            hasReset = true;
         }
         if(shootCooldown > 0)
         {
