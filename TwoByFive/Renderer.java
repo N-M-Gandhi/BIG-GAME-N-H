@@ -27,16 +27,12 @@ public class Renderer
     public Renderer(InputActivator input)
     {
         slices = 320;
-        scale = 3;
+        scale = 6;
         height = 200;
         wallHeight = 3.80;
         FOV = 90;
         imageReader = new ImageReader();
         imageReader.cacheImages();
-        spriteList = new ArrayList<Sprite>();
-        spriteList.add(new Sprite(new Vector2D(29, 29), 10));
-        spriteList.add(new Sprite(new Vector2D(12, 19), 9));
-        spriteList.add(new Sprite(new Vector2D(12, 19), 10));
 
         //Schedule a job for the event-dispatching thread:
         //creating and showing this application's GUI.
@@ -78,30 +74,49 @@ public class Renderer
         frame.setTitle(title);
     }
 
-    public void render(Player player, int[][] map)
+    public void render(Player player, Map map, Weapon weapon)
     {
+        spriteList = map.getSpriteList();
         //set up window
         Graphics2D graphics = image.createGraphics();
         graphics.setColor(BACKGROUND);
         graphics.fillRect(0, 0, image.getWidth(), image.getHeight());
-        //render 3D stuff
-        renderWalls(player, map, graphics);
-        //render sprites
-        //renderSprites(player, map, graphics);
+
+        //render 3D stuff + sprites(at end)
+        renderWalls(player, map.getMap(), graphics);
+
         //render weapon
-        renderUI(player, map, graphics);
+        renderUI(player, map.getMap(), graphics, weapon);
 
         graphics.dispose();
         frame.repaint();
     }
 
-    private void renderSprites(Player player, int[][] map, Graphics2D graphics, double[] rayDistances)
+    private void renderUI(Player player, int[][] map, Graphics2D graphics, Weapon weapon)
+    {
+        int imageNumber = weapon.getImageNumber();
+        for(int x = 0; x < imageReader.getWidth(imageNumber); x++)
+        {
+            for(int y = 0; y < imageReader.getHeight(imageNumber); y++)
+            {
+                Color color = imageReader.getColor(x, y, imageNumber);
+                if(!color.equals(new Color(255, 0, 255)))
+                {
+                    graphics.setColor(color);
+                    graphics.fillRect((x + slices/2 - imageReader.getWidth(imageNumber)/2)*scale, (height - imageReader.getHeight(imageNumber) + y)*scale, 1*scale, 1*scale);
+                }
+            }
+        }
+    }
+
+    private void renderSprites(Player player, int[][] map, Graphics2D graphics, double[] rayDistances)//this method gets you randomly stuck
     {
         for(int i = 0; i < spriteList.size(); i++) //there is a bug where sprites can be in wrong order, but whatever. Put furniture at end of list.
         {
             Sprite sprite = spriteList.get(i);
             double angle = Math.toDegrees(sprite.getAngleFrom(player.getVector2D())); //returns angle from player to sprite in degrees
             double distance = sprite.getDistance(player.getVector2D());
+            distance = distance * Math.cos(Math.toRadians(angle - player.r()));
             double xScale = 1 - ((angle - (player.r() - FOV/2)) / FOV); //System.out.println(xScale);
             int xOnScreen = (int) (xScale * slices);
             int imageNumber = sprite.getImageNumber();
@@ -129,22 +144,6 @@ public class Renderer
                         graphics.setColor(color);
                         graphics.fillRect((xOnScreen + x)*scale, y*scale, 1*scale, 1*scale);
                     }
-                }
-            }
-        }
-    }
-
-    private void renderUI(Player player, int[][] map, Graphics2D graphics)
-    {
-        for(int x = 120; x < 200; x++)
-        {
-            for(int y = 120; y < 200; y++)
-            {
-                Color color = imageReader.getColor(x - 120, y - 120, 7);
-                if(!color.equals(new Color(255, 0, 255)))
-                {
-                    graphics.setColor(color);
-                    graphics.fillRect(x*scale, y*scale, 1*scale, 1*scale);
                 }
             }
         }

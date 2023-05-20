@@ -12,6 +12,7 @@ public class Runner implements InputListener
     private MapRenderer mapRenderer;
     private Renderer renderer;
     private InputActivator input;
+    private Weapon weapon;
     public Runner()
     {
         player = new Player(12, 20, 90);
@@ -41,6 +42,8 @@ public class Runner implements InputListener
         //cache images
         ImageReader imageReader = new ImageReader();
         imageReader.cacheImages();
+
+        weapon = new Weapon(13, 14);
     }
 
     public static void main(String[] args)
@@ -55,7 +58,9 @@ public class Runner implements InputListener
         while(!dead)
         {
             try { Thread.sleep(1000/30); } catch(Exception e) {}
-            renderer.render(player, map.getMap());
+            renderer.render(player, map, weapon);
+            weapon.tick();
+            
         }
     }
 
@@ -64,8 +69,8 @@ public class Runner implements InputListener
         double distX = (Math.cos(Math.toRadians(player.r())));
         double distY = (Math.sin(Math.toRadians(player.r())));
 
-        player.moveX(distX * 0.25, map.getMap());
-        player.moveY(distY * -0.25, map.getMap());
+        player.moveX(distX * 0.10, map.getMap());
+        player.moveY(distY * -0.10, map.getMap());
     }
 
     public void sPressed()
@@ -73,8 +78,8 @@ public class Runner implements InputListener
         double distX = (Math.cos(Math.toRadians(player.r())));
         double distY = (Math.sin(Math.toRadians(player.r())));
 
-        player.moveX(distX * -0.25, map.getMap());
-        player.moveY(distY * 0.25, map.getMap());
+        player.moveX(distX * -0.10, map.getMap());
+        player.moveY(distY * 0.10, map.getMap());
     }
 
     public void aPressed()
@@ -82,8 +87,8 @@ public class Runner implements InputListener
         double distX = (Math.sin(Math.toRadians(player.r())));
         double distY = (Math.cos(Math.toRadians(player.r())));
 
-        player.moveX(distX * -0.25, map.getMap());
-        player.moveY(distY * -0.25, map.getMap());
+        player.moveX(distX * -0.10, map.getMap());
+        player.moveY(distY * -0.10, map.getMap());
     }
 
     public void dPressed()
@@ -91,8 +96,8 @@ public class Runner implements InputListener
         double distX = (Math.sin(Math.toRadians(player.r())));
         double distY = (Math.cos(Math.toRadians(player.r())));
 
-        player.moveX(distX * 0.25, map.getMap());
-        player.moveY(distY * 0.25, map.getMap());
+        player.moveX(distX * 0.10, map.getMap());
+        player.moveY(distY * 0.10, map.getMap());
     }
 
     public void qPressed()
@@ -102,5 +107,10 @@ public class Runner implements InputListener
 
     public void ePressed()
     {player.transR(-3, map.getMap());
+    }
+
+    public void spacePressed()
+    {
+        weapon.fire(true, player, map);
     }
 }

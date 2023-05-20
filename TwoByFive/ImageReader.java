@@ -25,10 +25,14 @@ public class ImageReader
         for(int i = 0; i < 128; i++){imageList.add(new ImagePNG());}//fills ArrayList with empt ImagePNG objects to later be set to real images
         imageList.set(1, new ImagePNG("multibrick.png"));
         imageList.set(2, new ImagePNG("nazi_banner.png"));
-        imageList.set(7, new ImagePNG("pistol_model.png"));
+        imageList.set(7, new ImagePNG("wolf_pistol.png"));
         imageList.set(9, new ImagePNG("fortnite_burger.png"));
         imageList.set(8, new ImagePNG("gunmanstand.png"));
         imageList.set(10, new ImagePNG("wolf_gaurd.png"));
+        imageList.set(11, new ImagePNG("wolf_pistol_fire.png"));
+        imageList.set(12, new ImagePNG("wolf_gaurd_dead.png"));
+        imageList.set(13, new ImagePNG("slimeinator.png"));
+        imageList.set(14, new ImagePNG("slimeinator_fire.png"));
     }
 
     public int getWidth(int number)

@@ -13,4 +13,5 @@ public interface InputListener
     void dPressed();
     void qPressed();
     void ePressed();
+    void spacePressed();
 }

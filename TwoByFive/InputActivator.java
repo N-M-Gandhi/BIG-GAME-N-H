@@ -27,16 +27,18 @@ public class InputActivator implements KeyListener
         int code = e.getKeyCode();
         if (code == KeyEvent.VK_W)
             listener.wPressed();
-        else if (code == KeyEvent.VK_S)
+        if (code == KeyEvent.VK_S)
             listener.sPressed();
-        else if (code == KeyEvent.VK_A)
+        if (code == KeyEvent.VK_A)
             listener.aPressed();
-        else if (code == KeyEvent.VK_D)
+        if (code == KeyEvent.VK_D)
             listener.dPressed();
-        else if (code == KeyEvent.VK_Q)
+        if (code == KeyEvent.VK_Q)
             listener.qPressed();
-        else if (code == KeyEvent.VK_E)
+        if (code == KeyEvent.VK_E)
             listener.ePressed();
+        if (code == KeyEvent.VK_SPACE)
+            listener.spacePressed();
     }
 
     public void setInputListener(InputListener listener)

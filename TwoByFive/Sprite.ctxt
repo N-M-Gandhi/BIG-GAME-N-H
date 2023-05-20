@@ -1,12 +1,16 @@
 #BlueJ class context
 comment0.target=Sprite
 comment0.text=\r\n\ Write\ a\ description\ of\ class\ sprite\ here.\r\n\r\n\ @author\ (your\ name)\r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
-comment1.params=v\ number
-comment1.target=Sprite(Vector2D,\ int)
-comment2.params=v
-comment2.target=double\ getDistance(Vector2D)
+comment1.params=
+comment1.target=Sprite()
+comment2.params=v\ number
+comment2.target=Sprite(Vector2D,\ int)
 comment3.params=v
-comment3.target=double\ getAngleFrom(Vector2D)
-comment4.params=
-comment4.target=int\ getImageNumber()
-numComments=5
+comment3.target=double\ getDistance(Vector2D)
+comment4.params=v
+comment4.target=double\ getAngleFrom(Vector2D)
+comment5.params=
+comment5.target=int\ getImageNumber()
+comment6.params=n
+comment6.target=void\ setImageNumber(int)
+numComments=7

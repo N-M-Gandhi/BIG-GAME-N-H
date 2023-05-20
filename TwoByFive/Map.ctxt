@@ -13,4 +13,6 @@ comment5.params=newMap
 comment5.target=void\ setMap(int[][])
 comment6.params=x\ y\ info
 comment6.target=void\ setMap(int,\ int,\ int)
-numComments=7
+comment7.params=
+comment7.target=java.util.ArrayList\ getSpriteList()
+numComments=8

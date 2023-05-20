@@ -7,7 +7,12 @@
  */
 public class Sprite extends Vector2D
 {
-    int imageNumber;
+    private int imageNumber;
+    public Sprite()
+    {
+        super(new Vector2D(0, 0));
+        imageNumber = 10;
+    }
     public Sprite(Vector2D v, int number)
     {
         super(v);
@@ -35,5 +40,10 @@ public class Sprite extends Vector2D
     public int getImageNumber()
     {
         return imageNumber;
+    }
+    
+    public void setImageNumber(int n)
+    {
+        imageNumber = n;
     }
 }

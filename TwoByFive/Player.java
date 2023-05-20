@@ -11,6 +11,7 @@ public class Player
     private double yPos;
     private double rot;
     private String playerChar;
+    
     public Player()
     {
         xPos = 0;
