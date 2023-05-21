@@ -26,6 +26,7 @@ public class Map
     }
     public Map(int s, Player p)
     {
+        player = p;
         //make empty map
         size = s;
         map = new int[size][size];
@@ -38,12 +39,13 @@ public class Map
         }
         spriteList = new ArrayList<Sprite>();
         spriteList.add(new Sprite(new Vector2D(29, 29), 10));
-        //spriteList.add(new Sprite(new Vector2D(12, 19), 9));
-        spriteList.add(new Enemy(new Vector2D(12, 19), 10, 15, 12));
-        spriteList.add(new Enemy(new Vector2D(13, 19), 10, 15, 12));
-        spriteList.add(new Enemy(new Vector2D(14, 19), 10, 15, 12));
-        spriteList.add(new Enemy(new Vector2D(15, 19), 10, 15, 12));
-        spriteList.add(new Enemy(new Vector2D(16, 19), 10, 15, 12));
+        spriteList.add(new Sprite(new Vector2D(12, 19), 9));
+        spriteList.add(new Enemy(new Vector2D(12, 19), 10, 15, 12, 16, 17));
+        spriteList.add(new Enemy(new Vector2D(13, 19), 10, 15, 12, 16, 17));
+        spriteList.add(new Enemy(new Vector2D(14, 19), 10, 15, 12, 16, 17));
+        spriteList.add(new Enemy(new Vector2D(15, 19), 10, 15, 12, 16, 17));
+        spriteList.add(new Enemy(new Vector2D(16, 19), 10, 15, 12, 16, 17));
+        spriteList.add(new Enemy(new Vector2D(1, 1), 10, 15, 12, 16, 17));
     }
     public void print()
     {
@@ -82,7 +84,7 @@ public class Map
             if(sprite instanceof Enemy)
             {
                 Enemy enemy = (Enemy)sprite;
-                enemy.tick();
+                enemy.tick(player);
             }
         }
     }

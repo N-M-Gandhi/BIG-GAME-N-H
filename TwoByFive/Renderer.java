@@ -116,15 +116,15 @@ public class Renderer
             Sprite sprite = spriteList.get(i);
             double angle = Math.toDegrees(sprite.getAngleFrom(player.getVector2D())); //returns angle from player to sprite in degrees
             double distance = sprite.getDistance(player.getVector2D());
-            if(angle < player.r() + FOV/2 && angle > player.r() - FOV/2)
+            distance = distance * Math.cos(Math.toRadians(angle - player.r()));
+            double xScale = 1 - ((angle - (player.r() - FOV/2)) / FOV); //System.out.println(xScale);
+            int xOnScreen = (int) (xScale * slices);
+            if(angle < player.r() + FOV/2 && angle > player.r() - FOV/2 && rayDistances[xOnScreen] > distance)
             {
-                distance = distance * Math.cos(Math.toRadians(angle - player.r()));
-                double xScale = 1 - ((angle - (player.r() - FOV/2)) / FOV); //System.out.println(xScale);
-                int xOnScreen = (int) (xScale * slices);
+                sprite.isSeen();
                 int imageNumber = sprite.getImageNumber();
                 int imageHeight = imageReader.getHeight(imageNumber);
                 int imageWidth = imageReader.getWidth(imageNumber);
-                int midPoint = imageWidth/2;
                 double doubleHeight = (imageHeight/64)/(2 * (Math.PI) * distance); // 64 pixels = 1 meter 
                 double doubleWidth = (imageWidth/64)/(2 * (Math.PI) * distance);
                 int intHeight = (int)(imageHeight * doubleHeight);
@@ -148,6 +148,10 @@ public class Renderer
                         }
                     }
                 }
+            }
+            else
+            {
+                sprite.unSeen();
             }
         }
     }

@@ -32,7 +32,6 @@ public class Weapon
         SHOOT_COOLDOWN = 18;
         fireCone = Math.toRadians(20);
         audioManager = new AudioManager();
-        audioManager.cacheAudio();
         hasReset = true;
     }
 
@@ -45,7 +44,6 @@ public class Weapon
         SHOOT_COOLDOWN = 18;
         fireCone = Math.toRadians(20);
         audioManager = new AudioManager();
-        audioManager.cacheAudio();
         hasReset = true;
     }
 

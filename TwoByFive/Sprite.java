@@ -8,6 +8,7 @@
 public class Sprite extends Vector2D
 {
     private int imageNumber;
+    private boolean isSeen;
     public Sprite()
     {
         super(new Vector2D(0, 0));
@@ -42,8 +43,22 @@ public class Sprite extends Vector2D
         return imageNumber;
     }
     
-    public void setImageNumber(int n)
+    public void setImage(int n)
     {
         imageNumber = n;
+    }
+    
+    public void isSeen()
+    {
+        isSeen = true;
+    }
+    public void unSeen()
+    {
+        isSeen = false;
+    }
+    
+    public boolean getSeen()
+    {
+        return isSeen;
     }
 }
