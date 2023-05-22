@@ -251,4 +251,21 @@ public class Renderer
         }   
         renderSprites(player, map, graphics, distance);
     }
+    
+    public void deadScreen()
+    {
+        Graphics2D graphics = image.createGraphics();
+        graphics.setColor(BACKGROUND);
+        graphics.fillRect(0, 0, image.getWidth(), image.getHeight());
+        for(int x = 0; x < imageReader.getWidth(18); x++)
+        {
+            for(int y = 0; y < imageReader.getHeight(18); y++)
+            {
+                graphics.setColor(imageReader.getColor(x, y, 18));
+                graphics.fillRect(x*scale, y*scale, 1*scale, 1*scale);
+            }
+        }
+        graphics.dispose();
+        frame.repaint();
+    }
 }

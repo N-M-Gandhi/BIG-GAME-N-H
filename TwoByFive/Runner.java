@@ -62,7 +62,14 @@ public class Runner implements InputListener
             weapon.tick();
             map.tick();
             player.tick(map);
+            if(player.getHealth() < 1)
+            {
+                dead = true;
+            }
         }
+        AudioManager audioManager = new AudioManager();
+        audioManager.play(10);
+        renderer.deadScreen();
     }
 
     public void wPressed() //tis a cruel design. there has to be a better way

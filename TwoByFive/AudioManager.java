@@ -31,6 +31,7 @@ public class AudioManager
         audioList.set(7, new AudioWAV("gaurd_unalert.wav"));
         audioList.set(8, new AudioWAV("player_hit.wav"));
         audioList.set(9, new AudioWAV("pistol_shot.wav"));
+        audioList.set(10, new AudioWAV("game_over.wav"));
     }
     
     public void play(int audioNumber)

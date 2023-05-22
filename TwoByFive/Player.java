@@ -23,6 +23,8 @@ public class Player
     private double anglesPerTick;
     private int lastX;
     private int moveDistance;
+    
+    private int health;
 
     public Player()
     {
@@ -33,6 +35,7 @@ public class Player
         metersPerTick = 0.1;
         anglesPerTick = 3;
         lastX = 0;
+        health = 15;
     }
 
     public Player(double x, double y, double r)
@@ -44,6 +47,7 @@ public class Player
         metersPerTick = 0.1;
         anglesPerTick = 3;
         lastX = 0;
+        health = 15;
     }
 
     public double x()
@@ -131,6 +135,16 @@ public class Player
             rot = rot - 360;
         }
         //map[(int)this.y()][(int)this.x()] = " " + playerChar.substring(((int)rot/45), (((int)rot/45)+1)) + " ";
+    }
+    
+    public void damage(int d)
+    {
+        health-=d;
+    }
+    
+    public int getHealth()
+    {
+        return health;
     }
 
     public Vector2D getVector2D()
