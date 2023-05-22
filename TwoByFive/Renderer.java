@@ -3,6 +3,9 @@ import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import javax.swing.*;
 import java.util.ArrayList;
+import java.awt.Component;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 /**
  * Write a description of class Renderer here.
  *
@@ -23,8 +26,10 @@ public class Renderer
     private static final Color BACKGROUND = Color.BLACK;
     private JFrame frame;
     private BufferedImage image;
+    
+    private Player player;
 
-    public Renderer(InputActivator input)
+    public Renderer(InputActivator input, Player p)
     {
         slices = 320;
         scale = 6;
@@ -33,6 +38,7 @@ public class Renderer
         FOV = 90;
         imageReader = new ImageReader();
         imageReader.cacheImages();
+        player = p;
 
         //Schedule a job for the event-dispatching thread:
         //creating and showing this application's GUI.
@@ -66,13 +72,24 @@ public class Renderer
         frame.add(new JLabel(new ImageIcon(image)));
         frame.pack();
         frame.setVisible(true);
+        
+        frame.addMouseMotionListener(new MouseAdapter() {
+                @Override
+                public void mouseMoved(MouseEvent e) {
+                    int x = e.getX(); // X-coordinate of the mouse pointer
+                    player.mouseX(x);
+                }
+            });
     }
+    
+    //public void getJFrame()
 
     // Sets the title of the window.
     public void setTitle(String title)
     {
         frame.setTitle(title);
     }
+
 
     public void render(Player player, Map map, Weapon weapon)
     {
@@ -115,6 +132,14 @@ public class Renderer
         {
             Sprite sprite = spriteList.get(i);
             double angle = Math.toDegrees(sprite.getAngleFrom(player.getVector2D())); //returns angle from player to sprite in degrees
+            if(angle > 270 && player.r() - FOV/2 < 0) //angle correction for aroun 0 or 360 degrees
+            {
+                angle-=360;
+            }
+            if(angle < 90 && player.r() + FOV/2 > 360)
+            {
+                angle+=360;
+            }
             double distance = sprite.getDistance(player.getVector2D());
             distance = distance * Math.cos(Math.toRadians(angle - player.r()));
             double xScale = 1 - ((angle - (player.r() - FOV/2)) / FOV); //System.out.println(xScale);

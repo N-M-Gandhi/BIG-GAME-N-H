@@ -7,6 +7,7 @@
  */
 public interface InputListener
 {
+    //pressing
     void wPressed();
     void sPressed();
     void aPressed();
@@ -14,4 +15,13 @@ public interface InputListener
     void qPressed();
     void ePressed();
     void spacePressed();
+    
+    //releasing
+    void wReleased();
+    void sReleased();
+    void aReleased();
+    void dReleased();
+    void qReleased();
+    void eReleased();
+    void spaceReleased();
 }

@@ -19,7 +19,7 @@ public class Runner implements InputListener
         map = new Map(32, player);
         input = new InputActivator();
         input.setInputListener(this);
-        renderer = new Renderer(input);
+        renderer = new Renderer(input, player);
         renderer.setTitle("Default TwoByFive Project Name");
         //walls
         Wall wall1 = new Wall(10, true, 3, 6, map.getMap());
@@ -61,55 +61,76 @@ public class Runner implements InputListener
             renderer.render(player, map, weapon);
             weapon.tick();
             map.tick();
+            player.tick(map);
         }
     }
 
-    public void wPressed()
+    public void wPressed() //tis a cruel design. there has to be a better way
     {
-        double distX = (Math.cos(Math.toRadians(player.r())));
-        double distY = (Math.sin(Math.toRadians(player.r())));
-
-        player.moveX(distX * 0.10, map.getMap());
-        player.moveY(distY * -0.10, map.getMap());
+        player.wPressed(true);
     }
 
     public void sPressed()
     {
-        double distX = (Math.cos(Math.toRadians(player.r())));
-        double distY = (Math.sin(Math.toRadians(player.r())));
-
-        player.moveX(distX * -0.10, map.getMap());
-        player.moveY(distY * 0.10, map.getMap());
+        player.sPressed(true);
     }
 
     public void aPressed()
     {
-        double distX = (Math.sin(Math.toRadians(player.r())));
-        double distY = (Math.cos(Math.toRadians(player.r())));
-
-        player.moveX(distX * -0.10, map.getMap());
-        player.moveY(distY * -0.10, map.getMap());
+        player.aPressed(true);
     }
 
     public void dPressed()
     {
-        double distX = (Math.sin(Math.toRadians(player.r())));
-        double distY = (Math.cos(Math.toRadians(player.r())));
-
-        player.moveX(distX * 0.10, map.getMap());
-        player.moveY(distY * 0.10, map.getMap());
+        player.dPressed(true);
     }
 
     public void qPressed()
     {
-        player.transR(3, map.getMap());
+        player.qPressed(true);
     }
 
     public void ePressed()
-    {player.transR(-3, map.getMap());
+    {
+        player.ePressed(true);
     }
 
     public void spacePressed()
+    {
+        weapon.fire(true, player, map);
+    }
+    
+    public void wReleased()
+    {
+        player.wPressed(false);
+    }
+
+    public void sReleased()
+    {
+        player.sPressed(false);
+    }
+
+    public void aReleased()
+    {
+        player.aPressed(false);
+    }
+
+    public void dReleased()
+    {
+        player.dPressed(false);
+    }
+
+    public void qReleased()
+    {
+        player.qPressed(false);
+    }
+    
+    public void eReleased()
+    {
+        player.ePressed(false);
+    }
+
+    public void spaceReleased()
     {
         weapon.fire(true, player, map);
     }
