@@ -32,7 +32,7 @@ public class Renderer
     public Renderer(InputActivator input, Player p)
     {
         slices = 320;
-        scale = 3;
+        scale = 6;
         height = 200;
         wallHeight = 3.80;
         FOV = 90;
@@ -121,6 +121,66 @@ public class Renderer
                 {
                     graphics.setColor(color);
                     graphics.fillRect((x + slices/2 - imageReader.getWidth(imageNumber)/2)*scale, (height - imageReader.getHeight(imageNumber) + y)*scale, 1*scale, 1*scale);
+                }
+            }
+        }
+        if(player.getHealth() > 11)
+        {
+            for(int i = 0; i < imageReader.getWidth(19); i++)
+            {
+                for(int j = 0; j < imageReader.getHeight(19); j++)
+                {
+                    Color color = imageReader.getColor(i, j, 19);
+                    if(!color.equals(new Color(255, 0, 255)))
+                    {
+                        graphics.setColor(color);
+                        graphics.fillRect((i + 7*slices/8 - imageReader.getWidth(19)/2) * scale, (height - 200 + j) * scale, 1*scale, 1* scale);
+                    }
+                }
+            }
+        }
+        else if(player.getHealth() > 7)
+        {
+           for(int i = 0; i < imageReader.getWidth(20); i++)
+            {
+                for(int j = 0; j < imageReader.getHeight(20); j++)
+                {
+                    Color color = imageReader.getColor(i, j, 20);
+                    if(!color.equals(new Color(255, 0, 255)))
+                    {
+                        graphics.setColor(color);
+                        graphics.fillRect((i + 7*slices/8 - imageReader.getWidth(20)/2) * scale, (height - 200 + j) * scale, 1*scale, 1* scale);
+                    }
+                }
+            } 
+        }
+        else if(player.getHealth() > 3)
+        {
+            for(int i = 0; i < imageReader.getWidth(21); i++)
+            {
+                for(int j = 0; j < imageReader.getHeight(21); j++)
+                {
+                    Color color = imageReader.getColor(i, j, 21);
+                    if(!color.equals(new Color(255, 0, 255)))
+                    {
+                        graphics.setColor(color);
+                        graphics.fillRect((i + 7*slices/8 - imageReader.getWidth(21)/2) * scale, (height - 200 + j) * scale, 1*scale, 1* scale);
+                    }
+                }
+            }
+        }
+        else if(player.getHealth() >= 0)
+        {
+            for(int i = 0; i < imageReader.getWidth(22); i++)
+            {
+                for(int j = 0; j < imageReader.getHeight(22); j++)
+                {
+                    Color color = imageReader.getColor(i, j, 22);
+                    if(!color.equals(new Color(255, 0, 255)))
+                    {
+                        graphics.setColor(color);
+                        graphics.fillRect((i + 7*slices/8 - imageReader.getWidth(22)/2) * scale, (height - 200 + j) * scale, 1*scale, 1* scale);
+                    }
                 }
             }
         }

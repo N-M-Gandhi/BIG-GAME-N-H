@@ -37,7 +37,10 @@ public class ImageReader
         imageList.set(16, new ImagePNG("wolf_gaurd_ready.png"));
         imageList.set(17, new ImagePNG("wolf_gaurd_shooting.png"));
         imageList.set(18, new ImagePNG("death_screen.png"));
-        imageList.set(19, new ImagePNG("medical_pickup.png"));
+        imageList.set(19, new ImagePNG("maxhp.png"));
+        imageList.set(20, new ImagePNG("34hp.png"));
+        imageList.set(21, new ImagePNG("24hp.png"));
+        imageList.set(22, new ImagePNG("minhp.png"));
     }
 
     public int getWidth(int number)
