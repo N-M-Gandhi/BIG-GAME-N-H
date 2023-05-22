@@ -32,6 +32,7 @@ public class AudioManager
         audioList.set(8, new AudioWAV("player_hit.wav"));
         audioList.set(9, new AudioWAV("pistol_shot.wav"));
         audioList.set(10, new AudioWAV("game_over.wav"));
+        audioList.set(11, new AudioWAV("health_pickup.wav"));
     }
     
     public void play(int audioNumber)

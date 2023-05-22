@@ -146,6 +146,11 @@ public class Player
     {
         return health;
     }
+    
+    public void addHealth(int i)
+    {
+        health+=i;
+    }
 
     public Vector2D getVector2D()
     {

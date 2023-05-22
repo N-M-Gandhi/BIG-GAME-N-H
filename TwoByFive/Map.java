@@ -76,6 +76,10 @@ public class Map
     {
         return spriteList;
     }
+    public void addSprite(HealthPickup health)
+    {
+        spriteList.add(health);
+    }
     public void tick()
     {
         for(int i = 0; i < spriteList.size(); i++)
@@ -85,6 +89,11 @@ public class Map
             {
                 Enemy enemy = (Enemy)sprite;
                 enemy.tick(player);
+            }
+            else if(sprite instanceof HealthPickup)
+            {
+                HealthPickup health = (HealthPickup)sprite;
+                health.tick(player);
             }
         }
     }

@@ -49,7 +49,7 @@ public class Enemy extends Sprite
         dead = false;
     }
 
-    public void shot()
+    public void shot(Map map)
     {
         if(!dead)
         {
@@ -62,6 +62,7 @@ public class Enemy extends Sprite
                 audioManager.play(5);
                 dead = true;
                 this.setImage(deadImage);
+                map.addSprite(new HealthPickup(new Vector2D(this.x(), this.y()), 19));
             }
         }
     }

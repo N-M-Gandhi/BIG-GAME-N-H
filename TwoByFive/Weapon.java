@@ -84,7 +84,7 @@ public class Weapon
                 double distance = sprite.getDistance(player.getVector2D());
                 if(angle > player.getRadians() - fireCone/2 && angle < player.getRadians() + fireCone/2 && distance < 2)
                 {
-                    enemy.shot();
+                    enemy.shot(map);
                 }
             }
         }
