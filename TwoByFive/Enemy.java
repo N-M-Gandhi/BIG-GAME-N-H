@@ -131,9 +131,12 @@ public class Enemy extends Sprite
     private void shootPlayer(Player player)
     {
         this.setImage(shootingImage);
-        player.damage(1);
-        audioManager.play(8);
         audioManager.play(9);
         shootCooldown = SHOOT_COOLDOWN;
+        if((int)(Math.random() * 100) < 75) //75% chance of hit
+        {
+            player.damage(1);
+            audioManager.play(8);
+        }
     }
 }
