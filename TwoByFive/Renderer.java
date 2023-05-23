@@ -26,7 +26,7 @@ public class Renderer
     private static final Color BACKGROUND = Color.BLACK;
     private JFrame frame;
     private BufferedImage image;
-    
+
     private Player player;
 
     public Renderer(InputActivator input, Player p)
@@ -72,7 +72,7 @@ public class Renderer
         frame.add(new JLabel(new ImageIcon(image)));
         frame.pack();
         frame.setVisible(true);
-        
+
         frame.addMouseMotionListener(new MouseAdapter() {
                 @Override
                 public void mouseMoved(MouseEvent e) {
@@ -81,7 +81,7 @@ public class Renderer
                 }
             });
     }
-    
+
     //public void getJFrame()
 
     // Sets the title of the window.
@@ -89,7 +89,6 @@ public class Renderer
     {
         frame.setTitle(title);
     }
-
 
     public void render(Player player, Map map, Weapon weapon)
     {
@@ -141,7 +140,7 @@ public class Renderer
         }
         else if(player.getHealth() > 7)
         {
-           for(int i = 0; i < imageReader.getWidth(20); i++)
+            for(int i = 0; i < imageReader.getWidth(20); i++)
             {
                 for(int j = 0; j < imageReader.getHeight(20); j++)
                 {
@@ -311,18 +310,20 @@ public class Renderer
         }   
         renderSprites(player, map, graphics, distance);
     }
-    
+
     public void deadScreen()
     {
         Graphics2D graphics = image.createGraphics();
-        graphics.setColor(BACKGROUND);
-        graphics.fillRect(0, 0, image.getWidth(), image.getHeight());
-        for(int x = 0; x < imageReader.getWidth(18); x++)
+        for(int x = 0; x < imageReader.getWidth(24); x++)
         {
-            for(int y = 0; y < imageReader.getHeight(18); y++)
+            for(int y = 0; y < imageReader.getHeight(24); y++)
             {
-                graphics.setColor(imageReader.getColor(x, y, 18));
-                graphics.fillRect(x*scale, y*scale, 1*scale, 1*scale);
+                Color color = imageReader.getColor(x, y, 24);
+                if(!color.equals(new Color(255, 0, 255)))
+                {
+                    graphics.setColor(imageReader.getColor(x, y, 24));
+                    graphics.fillRect(x*scale, y*scale, 1*scale, 1*scale);
+                }
             }
         }
         graphics.dispose();

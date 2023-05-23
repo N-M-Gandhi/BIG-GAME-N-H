@@ -14,9 +14,9 @@ public class HealthPickup extends Sprite
     {
         
     }
-    public HealthPickup(Vector2D v, int number)
+    public HealthPickup(Vector2D v)
     {
-        super(v, number);
+        super(v, 23);
         isUsed = false;
         healthIncrement = 3;
         audioManager = new AudioManager();

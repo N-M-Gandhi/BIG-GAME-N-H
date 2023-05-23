@@ -62,7 +62,7 @@ public class Enemy extends Sprite
                 audioManager.play(5);
                 dead = true;
                 this.setImage(deadImage);
-                map.addSprite(new HealthPickup(new Vector2D(this.x(), this.y()), 19));
+                map.addSprite(new HealthPickup(new Vector2D(this.x(), this.y())));
             }
         }
     }

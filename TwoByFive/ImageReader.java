@@ -41,6 +41,8 @@ public class ImageReader
         imageList.set(20, new ImagePNG("34hp.png"));
         imageList.set(21, new ImagePNG("24hp.png"));
         imageList.set(22, new ImagePNG("minhp.png"));
+        imageList.set(23, new ImagePNG("medical_pickup.png"));
+        imageList.set(24, new ImagePNG("you_died.png"));
     }
 
     public int getWidth(int number)
