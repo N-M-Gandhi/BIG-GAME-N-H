@@ -23,9 +23,8 @@ public class ImageReader
     public void cacheImages()
     {
         for(int i = 0; i < 128; i++){imageList.add(new ImagePNG());}//fills ArrayList with empt ImagePNG objects to later be set to real images
-        imageList.set(1, new ImagePNG("multibrick.png"));
-        imageList.set(2, new ImagePNG("nazi_banner.png"));
-        imageList.set(7, new ImagePNG("wolf_pistol.png"));
+        //imageList.set(2, new ImagePNG("nazi_banner.png"));
+        //imageList.set(7, new ImagePNG("wolf_pistol.png"));
         imageList.set(9, new ImagePNG("fortnite_burger.png"));
         imageList.set(8, new ImagePNG("gunmanstand.png"));
         imageList.set(10, new ImagePNG("wolf_gaurd.png"));
@@ -43,6 +42,19 @@ public class ImageReader
         imageList.set(22, new ImagePNG("minhp.png"));
         imageList.set(23, new ImagePNG("medical_pickup.png"));
         imageList.set(24, new ImagePNG("you_died.png"));
+        imageList.set(25, new ImagePNG("map_1.png"));
+        imageList.set(26, new ImagePNG("school_chair.png"));
+        imageList.set(27, new ImagePNG("hatsune_miku.png"));
+        imageList.set(28, new ImagePNG("wood_table.png"));
+        imageList.set(29, new ImagePNG("teleprompter.png"));
+        //wall textures
+        imageList.set(1, new ImagePNG("multibrick.png"));
+        imageList.set(2, new ImagePNG("brick_wall.png"));
+        imageList.set(3, new ImagePNG("steel_wall.png"));
+        imageList.set(4, new ImagePNG("wood_wall.png"));
+        imageList.set(5, new ImagePNG("tile_wall.png"));
+        imageList.set(6, new ImagePNG("book_wall.png"));
+        imageList.set(7, new ImagePNG("blue_wall.png"));
     }
 
     public int getWidth(int number)

@@ -23,6 +23,8 @@ public class Enemy extends Sprite
     private int CHECKALERT_COOLDOWN;
     private int alertCooldown;
     AudioManager audioManager;
+    
+    //sounds
     public Enemy()
     {
         super();
