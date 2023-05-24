@@ -55,6 +55,11 @@ public class ImageReader
         imageList.set(5, new ImagePNG("tile_wall.png"));
         imageList.set(6, new ImagePNG("book_wall.png"));
         imageList.set(7, new ImagePNG("blue_wall.png"));
+        //klaus textures
+        imageList.set(30, new ImagePNG("klauss.png"));
+        imageList.set(31, new ImagePNG("klauss_dead.png"));
+        imageList.set(32, new ImagePNG("klauss_fire.png"));
+        imageList.set(33, new ImagePNG("klauss_hit.png"));
     }
 
     public int getWidth(int number)
