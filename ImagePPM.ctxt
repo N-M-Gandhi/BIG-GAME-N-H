@@ -1,0 +1,13 @@
+#BlueJ class context
+comment0.target=ImagePPM
+comment1.params=
+comment1.target=ImagePPM()
+comment2.params=inDepth\ inWidth\ inHeight
+comment2.target=ImagePPM(int,\ int,\ int)
+comment3.params=
+comment3.target=int[][][]\ getPixels()
+comment4.params=x\ y
+comment4.target=java.awt.Color\ getColor(int,\ int)
+comment5.params=fileName
+comment5.target=void\ ReadPPM(java.lang.String)
+numComments=6
