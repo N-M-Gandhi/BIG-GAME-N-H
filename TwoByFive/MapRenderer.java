@@ -95,7 +95,9 @@ public class MapRenderer
         //render player
         graphics = image.createGraphics();
         graphics.setColor(new Color(255,0,0));
-        graphics.fillRect((int)player.x()*scale + 1, (int)player.y()*scale + 1, 1*(scale-1), 1*(scale-1));
+        //graphics.fillRect((int)player.x()*scale + 1, (int)player.y()*scale + 1, 1*(scale-1), 1*(scale-1));
+        graphics.setColor(new Color(255,0,255));
+        graphics.fillRect((int)(player.x()*scale + 1), (int)(player.y()*scale + 1), 4, 4);
         graphics.dispose();
 
         //render rayCasts

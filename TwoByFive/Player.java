@@ -64,14 +64,14 @@ public class Player
 
     public void moveX(double dist, int map[][])
     {
-        map[(int)this.y()][(int)this.x()] = 0;
+        //map[(int)this.y()][(int)this.x()] = 0;
         if(!(xPos + 1 > map.length - 1) && !(xPos + 1 < 0) && 
-        !(map[(int)this.y()][(int)this.x() + 1] > 0))
+        !(map[(int)this.y()][(int)(this.x() + dist + 0.1)] > 0))
         {
             if(dist > 0){xPos = xPos + dist;}
         }
         if(!(xPos - 1 > map.length - 1) && !(xPos - 1 < 0) && 
-        !(map[(int)this.y()][(int)this.x() - 1] > 0))
+        !(map[(int)this.y()][(int)(this.x() - dist - 0.1)] > 0))
         {
             if(dist < 0){xPos = xPos + dist;}
         }
@@ -92,14 +92,14 @@ public class Player
 
     public void moveY(double dist, int map[][])
     {
-        map[(int)this.y()][(int)this.x()] = 0;
+        //map[(int)this.y()][(int)this.x()] = 0;
         if(!(yPos + 1 > map.length - 1) && !(yPos + 1 < 0) && 
-        !(map[(int)this.y() + 1][(int)this.x()] > 0))
+        !(map[(int)(this.y() + dist + 0.1)][(int)this.x()] > 0))
         {
             if(dist > 0){yPos = yPos + dist;}
         }
         if(!(yPos - 1 > map.length - 1) && !(yPos - 1 < 0) && 
-        !(map[(int)this.y() - 1][(int)this.x()] > 0))
+        !(map[(int)(this.y() - dist - 0.1)][(int)this.x()] > 0))
         {
             if(dist < 0){yPos = yPos + dist;}
         }
