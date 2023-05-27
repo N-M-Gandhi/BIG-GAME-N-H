@@ -38,9 +38,9 @@ public class Map
             for(int x = 0; x < size; x++)
             {
                 map[y][x] = 0;
-                int redValue = imageReader.getColor(x, y, 25).getRed();
-                int greenValue = imageReader.getColor(x, y, 25).getGreen();
-                int blueValue = imageReader.getColor(x, y, 25).getBlue();
+                int redValue = imageReader.getColor(x, y, mapNumber).getRed();
+                int greenValue = imageReader.getColor(x, y, mapNumber).getGreen();
+                int blueValue = imageReader.getColor(x, y, mapNumber).getBlue();
                 switch(redValue)//walls
                 {
                     case 255: map[y][x] = 1; break; //multibrick

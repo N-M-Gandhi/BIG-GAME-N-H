@@ -45,6 +45,7 @@ public class Enemy extends Sprite
         shootingImage = shootingNumber;
         HIT_COOLDOWN = 11;
         SHOOT_COOLDOWN = 45;
+        shootCooldown = SHOOT_COOLDOWN;
         CHECKALERT_COOLDOWN = 60; // 2 seconds
         audioManager = new AudioManager();
         alert = false;

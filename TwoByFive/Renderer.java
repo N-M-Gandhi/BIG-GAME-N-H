@@ -31,8 +31,8 @@ public class Renderer
 
     public Renderer(InputActivator input, Player p)
     {
-        slices = 320;
-        scale = 6;
+        slices = 320 ;
+        scale = 3;
         height = 200;
         wallHeight = 3.80;
         FOV = 90;

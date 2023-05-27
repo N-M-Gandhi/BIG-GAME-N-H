@@ -16,7 +16,7 @@ public class Runner implements InputListener
     public Runner()
     {
         player = new Player(2, 2, 0);
-        map = new Map(player, 25);
+        map = new Map(player, 34);
         input = new InputActivator();
         input.setInputListener(this);
         renderer = new Renderer(input, player);

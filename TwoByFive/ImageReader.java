@@ -47,6 +47,7 @@ public class ImageReader
         imageList.set(27, new ImagePNG("hatsune_miku.png"));
         imageList.set(28, new ImagePNG("wood_table.png"));
         imageList.set(29, new ImagePNG("teleprompter.png"));
+        imageList.set(34, new ImagePNG("prisonmap.png"));
         //wall textures
         imageList.set(1, new ImagePNG("multibrick.png"));
         imageList.set(2, new ImagePNG("brick_wall.png"));
