@@ -275,16 +275,25 @@ public class RayCast
                 mapY += stepY;
                 side = 1;
             }
-            if (map[mapY][mapX] > 0 || map[mapY][mapX + xCellOff] > 0 || map[mapY + yCellOff][mapX] > 0) {
+            // if (mapY == 63|| mapY <= 1 || mapX == 63|| mapX <= 1
+            // || map[mapY][mapX] > 0 || map[mapY][Math.round(mapX) + xCellOff] > 0 || map[Math.round(mapY) + yCellOff][mapX] > 0)
+            // {
+                // hit = 1;
+            // }
+            if (mapY == 63|| mapY <= 1 || mapX == 63|| mapX <= 1
+            ||map[(mapY) + yCellOff][Math.round(mapX) + xCellOff] > 0)
+            {
                 hit = 1;
             }
         }
+        while(mapY < 0){mapY++;}
+        while(mapX < 0){mapX++;}
         if (side == 0) {
             perpWallDist = (mapX - player.x() + (1 - stepX) / 2) / rayDirX;
-            return new CastInfo(new Vector2D(mapX, player.y() + perpWallDist * rayDirY), map[mapY][mapX], true);
+            return new CastInfo(new Vector2D(mapX, player.y() + perpWallDist * rayDirY), map[(mapY) + yCellOff][Math.round(mapX) + xCellOff], true);
         } else {
             perpWallDist = (mapY - player.y() + (1 - stepY) / 2) / rayDirY;
-            return new CastInfo(new Vector2D(player.x() + perpWallDist * rayDirX, mapY), map[mapY][mapX], false);
+            return new CastInfo(new Vector2D(player.x() + perpWallDist * rayDirX, mapY), map[(mapY) + yCellOff][Math.round(mapX) + xCellOff], false);
         }
     }
 }

@@ -257,10 +257,10 @@ public class Renderer
             double screenRatio = wallHeight/(2 * (Math.PI) * rayLength); //makes walls 3.8 meters high
             int screenScaledRayLength = (int)(height * screenRatio); //calculate length of slice
             int sliceLength = 0;
-            if(screenScaledRayLength >= height){sliceLength = height -1;}//if greater than screen, slice length set to maximum
-            if(screenScaledRayLength < height && (int)screenScaledRayLength >= 0)
-            {sliceLength = (int)(screenScaledRayLength);}// set slicelength if within screen
-
+            //if(screenScaledRayLength >= height){sliceLength = height -1;}//if greater than screen, slice length set to maximum
+            // if(screenScaledRayLength < height && (int)screenScaledRayLength >= 0)
+            // {sliceLength = (int)(screenScaledRayLength);}// set slicelength if within screen
+            sliceLength = (int)(screenScaledRayLength);
             //fill slice with blank space so I dont get permanenet screen tarring
             for(int y = 0; y < height; y++)
             {
@@ -295,6 +295,7 @@ public class Renderer
             for(int y = height/2 - sliceLength/2; y <  height/2 + sliceLength/2; y++)
             {
                 double sliceScaler = (double)(y - height/2 + sliceLength/2)/sliceLength; //System.out.println("scaler " + (y - height/2 + sliceLength/2) + "/" + sliceLength + "=" + sliceScaler);
+                if(sliceScaler >= 1 || sliceScaler <= 0){sliceScaler = 0;}
                 int imageY = (int)(imageHeight * sliceScaler); //System.out.println("y " + imageY);
                 Color color = imageReader.getColor(imageX, imageY, wallType);
                 if(collisionPoint.getShade())

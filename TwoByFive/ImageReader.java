@@ -25,6 +25,7 @@ public class ImageReader
         for(int i = 0; i < 128; i++){imageList.add(new ImagePNG());}//fills ArrayList with empt ImagePNG objects to later be set to real images
         //imageList.set(2, new ImagePNG("nazi_banner.png"));
         //imageList.set(7, new ImagePNG("wolf_pistol.png"));
+        imageList.set(0, new ImagePNG("default_texture.png"));
         imageList.set(9, new ImagePNG("fortnite_burger.png"));
         imageList.set(8, new ImagePNG("gunmanstand.png"));
         imageList.set(10, new ImagePNG("wolf_gaurd.png"));
