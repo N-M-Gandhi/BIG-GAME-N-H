@@ -7,4 +7,6 @@ comment2.params=rayAngle\ player\ map
 comment2.target=CastInfo\ castClose(double,\ Player,\ int[][])
 comment3.params=rayAngle\ player\ map
 comment3.target=CastInfo\ castLodev(double,\ Player,\ int[][])
-numComments=4
+comment4.params=rayAngle\ player\ map
+comment4.target=CastInfo\ castLodevGPT(double,\ Player,\ int[][])
+numComments=5

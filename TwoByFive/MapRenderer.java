@@ -112,7 +112,7 @@ public class MapRenderer
         {
             double rayAngle = player.r() + 45 - viewIncrement * i; //the angle of this speciic raycast
             double slope = Math.tan(Math.toRadians(rayAngle));//calculate slope of rayCast
-            CastInfo collisionPoint = RayCast.castLodev(rayAngle, player, map.getMap()); //returns collision Vector2D
+            CastInfo collisionPoint = RayCast.castLodevGPT(rayAngle, player, map.getMap()); //returns collision Vector2D
             double raycastDist = Math.sqrt(Math.pow(collisionPoint.x() - player.x(), 2) 
                     + Math.pow(collisionPoint.y() - player.y(), 2));
             CastInfo innitIntersect = RayCast.castClose(rayAngle, player, map.getMap()); //returns collision Vector2D

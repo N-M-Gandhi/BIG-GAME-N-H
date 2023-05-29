@@ -83,7 +83,7 @@ public class RayCast
                 //just do nothing so I don't get an out of bonds error
                 break;
             }
-            else if(map[(int)realY][(int)realX] > 1 || map[(int)realY][(int)realX + extraXCellCheck] > 1)
+            else if(map[(int)realY][(int)realX] > 0 || map[(int)realY][(int)realX + extraXCellCheck] > 0)
             {
                 //record wall intersection value and break
                 intersections[0].setInfo(new Vector2D(realX, realY), 1, true);
@@ -109,7 +109,7 @@ public class RayCast
                 //just do nothing so I don't get an out of bonds error
                 break;
             }
-            else if(map[(int)realY][(int)realX] > 1 || map[(int)realY + extraYCellCheck][(int)realX] > 1)
+            else if(map[(int)realY][(int)realX] > 0 || map[(int)realY + extraYCellCheck][(int)realX] > 0)
             {
                 //record wall intersection value and break
                 intersections[1].setInfo(new Vector2D(realX, realY), 1, false);
@@ -252,7 +252,7 @@ public class RayCast
         if (rayDirX < 0) {
             stepX = -1;
             sideDistX = (player.x() - mapX) * deltaDistX;
-            //xCellOff = -1;
+            xCellOff = -1;
         } else {
             stepX = 1;
             sideDistX = (mapX + 1.0 - player.x()) * deltaDistX;
@@ -260,7 +260,7 @@ public class RayCast
         if (rayDirY < 0) {
             stepY = -1;
             sideDistY = (player.y() - mapY) * deltaDistY;
-            //yCellOff = -1;
+            yCellOff = -1;
         } else {
             stepY = 1;
             sideDistY = (mapY + 1.0 - player.y()) * deltaDistY;
@@ -273,27 +273,106 @@ public class RayCast
             } else {
                 sideDistY += deltaDistY;
                 mapY += stepY;
-                side = 1;
+                side = -1;
             }
-            // if (mapY == 63|| mapY <= 1 || mapX == 63|| mapX <= 1
-            // || map[mapY][mapX] > 0 || map[mapY][Math.round(mapX) + xCellOff] > 0 || map[Math.round(mapY) + yCellOff][mapX] > 0)
-            // {
-                // hit = 1;
-            // }
-            if (mapY == 63|| mapY <= 1 || mapX == 63|| mapX <= 1
-            ||map[(mapY) + yCellOff][Math.round(mapX) + xCellOff] > 0)
+            if (map[mapY][mapX] > 0)
             {
                 hit = 1;
+                xCellOff = 0;
+                yCellOff = 0;
+            }
+            else if(map[mapY][mapX + xCellOff] > 0)
+            {
+                hit = 1;
+                yCellOff = 0;
+                xCellOff = -1;
+            }
+            else if(map[mapY + yCellOff][mapX] > 0)
+            {
+                hit = 1;
+                yCellOff = -1;
+                xCellOff = 0;
+            }
+            else if(map[mapY + yCellOff][mapX + xCellOff] > 0)
+            {
+                hit = 1;
+                xCellOff = -1;
+                yCellOff = -1;
             }
         }
         while(mapY < 0){mapY++;}
         while(mapX < 0){mapX++;}
         if (side == 0) {
+            perpWallDist = (side == 0) ? (mapX - player.x() + (1 - stepX) * 0.5) / rayDirX : (mapY - player.y() + (1 - stepY) * 0.5) / rayDirY;
+            //perpWallDist = (mapX - player.x() + (1 - stepX) / 2) / rayDirX;
+            return new CastInfo(new Vector2D(mapX, player.y() + perpWallDist * rayDirY), map[(mapY) + yCellOff][mapX + xCellOff], true);
+        } else {
+            perpWallDist = (side == 0) ? (mapX - player.x() + (1 - stepX) * 0.5) / rayDirX : (mapY - player.y() + (1 - stepY) * 0.5) / rayDirY;
+            //perpWallDist = (mapY - player.y() + (1 - stepY) / 2) / rayDirY;
+            return new CastInfo(new Vector2D(player.x() + perpWallDist * rayDirX, mapY), map[(mapY) + yCellOff][mapX + xCellOff], false);
+        }
+    }
+
+    public static CastInfo castLodevGPT(double rayAngle, Player player, int[][] map) {
+        if (rayAngle < 0) {
+            rayAngle = rayAngle + 360;
+        }
+        if (rayAngle > 360) {
+            rayAngle = rayAngle - 360;
+        }
+        double theta = Math.toRadians(rayAngle);
+        double rayDirX = Math.cos(theta);
+        double rayDirY = -1 * Math.sin(theta);
+        int mapX = (int) player.x();
+        int mapY = (int) player.y();
+        double sideDistX;
+        double sideDistY;
+        double deltaDistX = Math.sqrt(1 + (rayDirY * rayDirY) / (rayDirX * rayDirX));
+        double deltaDistY = Math.sqrt(1 + (rayDirX * rayDirX) / (rayDirY * rayDirY));
+        double perpWallDist;
+        int stepX;
+        int stepY;
+        int hit = 0;
+        int side = 0;
+
+        if (rayDirX < 0) {
+            stepX = -1;
+            sideDistX = (player.x() - mapX) * deltaDistX;
+        } else {
+            stepX = 1;
+            sideDistX = (mapX + 1.0 - player.x()) * deltaDistX;
+        }
+
+        if (rayDirY < 0) {
+            stepY = -1;
+            sideDistY = (player.y() - mapY) * deltaDistY;
+        } else {
+            stepY = 1;
+            sideDistY = (mapY + 1.0 - player.y()) * deltaDistY;
+        }
+
+        while (hit == 0) {
+            if (sideDistX < sideDistY) {
+                sideDistX += deltaDistX;
+                mapX += stepX;
+                side = 0;
+            } else {
+                sideDistY += deltaDistY;
+                mapY += stepY;
+                side = 1;
+            }
+
+            if (mapY < 0 || mapY >= map.length || mapX < 0 || mapX >= map[0].length || map[mapY][mapX] > 0) {
+                hit = 1;
+            }
+        }
+
+        if (side == 0) {
             perpWallDist = (mapX - player.x() + (1 - stepX) / 2) / rayDirX;
-            return new CastInfo(new Vector2D(mapX, player.y() + perpWallDist * rayDirY), map[(mapY) + yCellOff][Math.round(mapX) + xCellOff], true);
+            return new CastInfo(new Vector2D(mapX, player.y() + perpWallDist * rayDirY), map[mapY][mapX], true);
         } else {
             perpWallDist = (mapY - player.y() + (1 - stepY) / 2) / rayDirY;
-            return new CastInfo(new Vector2D(player.x() + perpWallDist * rayDirX, mapY), map[(mapY) + yCellOff][Math.round(mapX) + xCellOff], false);
+            return new CastInfo(new Vector2D(player.x() + perpWallDist * rayDirX, mapY), map[mapY][mapX], false);
         }
     }
 }

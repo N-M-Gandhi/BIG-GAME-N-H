@@ -247,7 +247,7 @@ public class Renderer
         for(int i = 0; i < slices; i++)
         {
             double rayAngle = player.r() + FOV/2 - viewIncrement * i; //the angle of this speciic raycast
-            CastInfo collisionPoint = RayCast.castLodev(rayAngle, player, map); //returns collision Vector2D
+            CastInfo collisionPoint = RayCast.castLodevGPT(rayAngle, player, map); //returns collision Vector2D
             double rayLength = Math.sqrt(Math.pow(collisionPoint.x() - player.x(), 2) 
                     + Math.pow(collisionPoint.y() - player.y(), 2)); //the length of a casted ray from player position at rayAngle
             distance[i] = rayLength;//stow this value for comparint to sprite
@@ -284,11 +284,11 @@ public class Renderer
             double pixelScaler = 0;
             if(!collisionPoint.getShade())
             {
-                pixelScaler = collisionPoint.x() - (int)collisionPoint.x();
+                pixelScaler = Math.abs(collisionPoint.x() - (int)collisionPoint.x());
             }
             else
             {
-                pixelScaler = collisionPoint.y() - (int)collisionPoint.y();
+                pixelScaler = Math.abs(collisionPoint.y() - (int)collisionPoint.y());
             }
             //System.out.println(pixelScaler);
             int imageX = (int)(imageWidth * pixelScaler); //System.out.println(imageX);

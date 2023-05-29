@@ -15,7 +15,7 @@ public class Runner implements InputListener
     private Weapon weapon;
     public Runner()
     {
-        player = new Player(2, 2, 0);
+        player = new Player(3, 3, 0);
         map = new Map(player, 34);
         input = new InputActivator();
         input.setInputListener(this);

@@ -41,6 +41,7 @@ public class ImagePNG
     }
     public Color getColor(int x, int y)
     {
+        //System.out.println(x + ", " + y);
         return new Color(image.getRGB(x, y));
     }
     public int height()
